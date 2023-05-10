@@ -1,11 +1,38 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #define num_voci_menu_standard 6
 #define num_voci_menu_superuser 8
 void stampaMenu(int modalità) {
     char c;
-    int posizione = 0;
-    char vociMenu[num_voci_menu_standard][100] = {"1) Setting Automobile", "2) Data;", "3) Ora;", "4) Blocco Automatico Porte;", "5) Back-Home;", "6) Check Olio"};
-    char vociMenuSuperUser[num_voci_menu_superuser][100] = {"1) Setting Automobile", "2) Data;", "3) Ora;", "4) Blocco Automatico Porte;", "5) Back-Home;", "6) Check Olio", "7) Frecce Direzione", "8) Reset Pressione Gomme"};
+    int posizione = 0, dim;
+    
+    if(modalità == 2244){
+        dim = num_voci_menu_superuser;
+    }else{
+        dim = num_voci_menu_standard;
+    }
+    char vociMenu[dim][100];
+    
+    if(modalità == 2244){
+            strcpy(vociMenu[0], "1) Setting Automobile;");
+            strcpy(vociMenu[1], "2) Data;");
+            strcpy(vociMenu[2], "3) Ora;");
+            strcpy(vociMenu[3], "4) Blocco Automatico Porte;");
+            strcpy(vociMenu[4], "5) Back-Home;");
+            strcpy(vociMenu[5], "6) Check Olio;");
+            strcpy(vociMenu[6], "7) Frecce Direzione;");
+            strcpy(vociMenu[7], "8) Reset Pressione Gomme");
+            
+    }else{
+            strcpy(vociMenu[0], "1) Setting Automobile;");
+            strcpy(vociMenu[1], "2) Data;");
+            strcpy(vociMenu[2], "3) Ora;");
+            strcpy(vociMenu[3], "4) Blocco Automatico Porte;");
+            strcpy(vociMenu[4], "5) Back-Home;");
+            strcpy(vociMenu[5], "6) Check Olio;");
+    }
+
     printf("Menu:\n");
     for (int i = 0; i < num_voci_menu_standard; i++) {
         printf("- %s\n", vociMenu[i]); // stampa la voce del menu
@@ -17,7 +44,7 @@ void stampaMenu(int modalità) {
         // Stampa il menu
         printf("\033[2J"); // Pulisci lo schermo
         printf("Menu:\n");
-        for (int i = 0; i < num_voci_menu_standard; i++) {
+        for (int i = 0; i < dim; i++) {
             if (i == posizione) {
                 printf("> %s\n", vociMenu[i]); // stampa la voce selezionata
             } else {
@@ -34,7 +61,7 @@ void stampaMenu(int modalità) {
             c = getchar();
             if (c == 'B') {
                 // Freccia giù
-                if (posizione < num_voci_menu_standard - 1) {
+                if (posizione < dim - 1) {
                     posizione++;
                 }
             } else if (c == 'A') {
