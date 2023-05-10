@@ -136,8 +136,8 @@ void stampaMenu(int modalità) {
         dim = num_voci_menu_standard;
     }
     char vociMenu[dim][100];
-    // popolo il menu da stampare
-    if(modalità == 2244){
+    // POPOLO IL MENU A SECONDA DELL'UTENTE:
+    if(modalità == 2244){// SUPERUSER:
             strcpy(vociMenu[0], "1) Data: ");
             strcpy(vociMenu[1], "2) Ora: ");
             strcpy(vociMenu[2], "3) Blocco Automatico Porte: ");
@@ -145,8 +145,7 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[4], "5) Frecce Direzione: ");
             strcpy(vociMenu[5], "6) Check olio;");
             strcpy(vociMenu[6], "7) Reset Pressione Gomme");
-            
-    }else{
+    }else{ // NORMALE:
             strcpy(vociMenu[0], "1) Data: ");
             strcpy(vociMenu[1], "2) Ora: ");
             strcpy(vociMenu[2], "3) Blocco Automatico Porte: ");
@@ -154,16 +153,17 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[4], "5) Check Olio;");
     }
 
-printf("Setting Automobile:\n");
+    // STAMPO VOCI DEL MENU:
+    printf("Setting Automobile:\n");
     for (int i = 0; i < num_voci_menu_standard; i++) {
-        printf("- %s\n", vociMenu[i]); // stampa la voce del menu
+        printf("- %s\n", vociMenu[i]);          
     }
     printf("\n");
     printf("Premi freccia sinistra o destra per scorrere il menu\n");
 
     while (1) {
-        // Stampa il menu
-        printf("\033[2J"); // Pulisci lo schermo
+        // STAMPO VOCI DEL MENU:
+        printf("\033[2J"); // PULISCO TERMINALE:
         printf("Setting Automobile:\n");
         for (int i = 0; i < dim; i++) {
             // TROVO TEMPO ISTANTANEO: 
@@ -177,6 +177,8 @@ printf("Setting Automobile:\n");
                 dt.day = local_time->tm_mday;
                 dt.hour = local_time->tm_hour;
                 dt.minute = local_time->tm_min;
+
+            // SEPARO I DATI ISTANTANEI CHE DEVO STAMPARE:
             switch (i)
             {
                 case 0:
@@ -206,32 +208,31 @@ printf("Setting Automobile:\n");
                     break;
             }
             if (i == posizione) {
-                printf("> %s", vociMenu[i]); // stampa la voce selezionata
+                printf("> %s", vociMenu[i]); // PORTA IL CURSORE SULLA VOCE SELEZIONATA
             } else {
-                printf("  %s", vociMenu[i]); // stampa la voce non selezionata
+                printf("  %s", vociMenu[i]); // STAMPA SPAZIO VUOTO SULLE RIMANENTI
             }
         }
         printf("\n");
 
-        // Leggi il carattere dalla tastiera
         c = getchar();
 
-        // Determina quale freccia è stata premuta
+        // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
         if (c == '\033' && getchar() == '[') {
             c = getchar();
             switch (c)
             {
-            case 'B':// Freccia giù
+            case 'B':// FRECCIA GIU'
                 if (posizione < dim - 1) {
                     posizione++;
                 }
                 break;
-            case 'A':// Freccia su
+            case 'A':// FRECCIA SU
                 if (posizione > 0) {
                     posizione--;
                 }
                 break;
-            case 'C':// Freccia sottomenu
+            case 'C':// FRECCIA DESTRA ( per sotto-menu )
                 stottomenu(vociMenu, dim, posizione, modalità);
                 break;
             default:
@@ -246,12 +247,13 @@ int main(int argc, char const *argv[]) {
     int modalità;
     
     // CONTROLLO SE UTENTE HA PASSATO PARAMETRI DA LINEA DI COMANDO:
-    if(argc == 2){ // Se utente ha passato un parametro
+    if(argc == 2){ 
          modalità = atoi(argv[1]); // Modalità SUPERVISOR
     } else{
         modalità = 1; // modalità DEFAULT
     }
 
+    // PASSO IL PARAMETRO PASSATO DA LINEA DI COMANDO ( verrà controllato successivamente se equivale a super-user ):
     stampaMenu(modalità);
 
     return 0;
