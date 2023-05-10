@@ -142,13 +142,6 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[4], "5) Check Olio;");
     }
 
-    printf("Setting Automobile:\n");
-    for (int i = 0; i < dim; i++) {
-        printf("- %s\n", vociMenu[i]); // stampa la voce del menu
-    }
-    printf("\n");
-    printf("Premi freccia sinistra o destra per scorrere il menu\n");
-
     while (1) {
         // Stampa il menu
         printf("\033[2J"); // Pulisci lo schermo
