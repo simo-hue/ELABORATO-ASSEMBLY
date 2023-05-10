@@ -19,7 +19,7 @@ int blocco_porte = 1, back_home = 1;
 int end = 0, lampeggio[3] = {3, 2, 5}; // lampeggio[0] valore salvato, lampeggio[1] valore minimo, lampeggio[2] valore massimo
 struct datetime dt;
 
-void stottomenu(char vociMenu[][100], int dim, int indice){
+void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     char c;
     int scelta, lampeggi, reset, porte, home;
     switch (indice)
@@ -76,21 +76,23 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
         }
         break;
     case 4:
-        printf("\n*************************************\n");
-        printf("* Sotto Menu Check Frecce Direzione *\n");
-        printf("*************************************\n");
-        printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
-        printf("1) PER MODIFICARE QUANTITA' LAMPEGGI\n");
-        scanf("%d", &lampeggi);
-        // Utente può scegliere, ma se fuori range prenderà l'estremo più vicino
-        if(lampeggi == 1){
-                printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
-                scanf("%d", &lampeggio[0]);
-                if(lampeggio[0] < 2){
-                    lampeggio[0] = 2;
-                }else if(lampeggio[0] > 5){
-                    lampeggio[0] = 5;
-                }
+        if(modalità == 2244){
+            printf("\n*************************************\n");
+            printf("* Sotto Menu Check Frecce Direzione *\n");
+            printf("*************************************\n");
+            printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
+            printf("1) PER MODIFICARE QUANTITA' LAMPEGGI\n");
+            scanf("%d", &lampeggi);
+            // Utente può scegliere, ma se fuori range prenderà l'estremo più vicino
+            if(lampeggi == 1){
+                    printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
+                    scanf("%d", &lampeggio[0]);
+                    if(lampeggio[0] < 2){
+                        lampeggio[0] = 2;
+                    }else if(lampeggio[0] > 5){
+                        lampeggio[0] = 5;
+                    }
+            }
         }
         break;
     case 5:
@@ -142,6 +144,13 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[4], "5) Check Olio;");
     }
 
+printf("Setting Automobile:\n");
+    for (int i = 0; i < num_voci_menu_standard; i++) {
+        printf("- %s\n", vociMenu[i]); // stampa la voce del menu
+    }
+    printf("\n");
+    printf("Premi freccia sinistra o destra per scorrere il menu\n");
+
     while (1) {
         // Stampa il menu
         printf("\033[2J"); // Pulisci lo schermo
@@ -160,7 +169,6 @@ void stampaMenu(int modalità) {
                 dt.minute = local_time->tm_min;
             switch (i)
             {
-            
                 case 0:
                     printf("\n");
                     break;
@@ -214,7 +222,7 @@ void stampaMenu(int modalità) {
                 }
                 break;
             case 'C':// Freccia sottomenu
-                stottomenu(vociMenu, dim, posizione);
+                stottomenu(vociMenu, dim, posizione, modalità);
                 break;
             default:
                 break;
