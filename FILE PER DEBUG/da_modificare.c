@@ -19,6 +19,7 @@ int blocco_porte = 1, back_home = 1;
 int end = 0, lampeggio[3] = {3, 2, 5}; // lampeggio[0] VALORE SALVATO, lampeggio[1] VALORE MINIMO, lampeggio[2] VALORE MASSIMO:
 struct datetime dt;
 
+// STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
 void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     char c;
     int scelta, lampeggi, reset, porte, home;
@@ -126,9 +127,10 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     }
 }
 
+// STAMPA IL MENU PRINCIPALE IN BASE ALL'UNTENTE:
 void stampaMenu(int modalità) {
     char c;
-    int posizione = 0, dim;
+    int posizione = 0, dim, fine = 0;
     
     if(modalità == 2244){
         dim = num_voci_menu_superuser;
@@ -161,7 +163,7 @@ void stampaMenu(int modalità) {
     printf("\n");
     printf("Premi freccia sinistra o destra per scorrere il menu\n");
 
-    while (1) {
+    while (!fine) {
         // STAMPO VOCI DEL MENU:
         printf("\033[2J"); // PULISCO TERMINALE:
         printf("Setting Automobile:\n");
@@ -231,6 +233,10 @@ void stampaMenu(int modalità) {
                 if (posizione > 0) {
                     posizione--;
                 }
+                break;
+            case 'D':// INVIO
+                printf("\033[2J"); // PULISCO TERMINALE:
+                fine = 1;
                 break;
             case 'C':// FRECCIA DESTRA ( per sotto-menu )
                 stottomenu(vociMenu, dim, posizione, modalità);
