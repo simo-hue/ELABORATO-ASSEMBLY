@@ -16,19 +16,19 @@ void stampaMenu(int modalità) {
     
     if(modalità == 2244){
             strcpy(vociMenu[0], "1) Setting Automobile;");
-            strcpy(vociMenu[1], "2) Data;");
-            strcpy(vociMenu[2], "3) Ora;");
-            strcpy(vociMenu[3], "4) Blocco Automatico Porte;");
-            strcpy(vociMenu[4], "5) Back-Home;");
+            strcpy(vociMenu[1], "2) Data: ");
+            strcpy(vociMenu[2], "3) Ora: ");
+            strcpy(vociMenu[3], "4) Blocco Automatico Porte: ");
+            strcpy(vociMenu[4], "5) Back-Home: ");
             strcpy(vociMenu[5], "6) Check Olio;");
             strcpy(vociMenu[6], "7) Frecce Direzione;");
             strcpy(vociMenu[7], "8) Reset Pressione Gomme");
             
     }else{
             strcpy(vociMenu[0], "1) Setting Automobile;");
-            strcpy(vociMenu[1], "2) Data;");
-            strcpy(vociMenu[2], "3) Ora;");
-            strcpy(vociMenu[3], "4) Blocco Automatico Porte;");
+            strcpy(vociMenu[1], "2) Data: ");
+            strcpy(vociMenu[2], "3) Ora: ");
+            strcpy(vociMenu[3], "4) Blocco Automatico Porte: ");
             strcpy(vociMenu[4], "5) Back-Home;");
             strcpy(vociMenu[5], "6) Check Olio;");
     }
