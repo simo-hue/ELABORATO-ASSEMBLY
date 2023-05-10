@@ -28,19 +28,55 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     {
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
     case 0:
-        printf("\n***********************************\n");
-        printf("********* Sotto Menu Data *********\n");
-        printf("***********************************\n");
-        printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
-        scanf(" %c", &c);
+        esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
+
+        while(!esciSottoMenu){
+            printf("\033[2J"); // PULISCO TERMINALE:
+            printf("\n***********************************\n");
+            printf("********* Sotto Menu Data *********\n");
+            printf("***********************************\n");
+            printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
+
+            c = getchar();
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
         break;
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
     case 1:
-        printf("\n***********************************\n");
-        printf("********** Sotto Menu Ora *********\n");
-        printf("***********************************\n");
-        printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
-        scanf(" %c", &c);
+        esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
+
+        while(!esciSottoMenu){
+            printf("\033[2J"); // PULISCO TERMINALE:
+            printf("\n***********************************\n");
+            printf("********** Sotto Menu Ora *********\n");
+            printf("***********************************\n");
+            printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
+
+            c = getchar();
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
         break;
     // MENU DOVE SI CAMBIA DA on A off E NIENT ALTRO:
     case 2:
