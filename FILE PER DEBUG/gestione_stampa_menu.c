@@ -13,6 +13,7 @@ struct datetime {
     int hour;
     int minute;
 };
+
 // COME SCELTA PROGETTUALE SI SCEGLIE DI IMPOSTARE AD ON SIA BLOCCO PORTE CHE BACK-HOME:
 char stati[2][10] = {"OFF", "ON"};
 int blocco_porte = 1, back_home = 1;
@@ -22,7 +23,7 @@ struct datetime dt;
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
 void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     char c;
-    int scelta, lampeggi, reset, porte, home;
+    int scelta, lampeggi, reset, porte, home, esciSottoMenu = 0;
     switch (indice)
     {
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
@@ -30,7 +31,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         printf("\n***********************************\n");
         printf("********* Sotto Menu Data *********\n");
         printf("***********************************\n");
-        printf("\nFUSO ORARIO UTILIZZATO : GMT+2");
+        printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
         scanf(" %c", &c);
         break;
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
@@ -38,87 +39,233 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         printf("\n***********************************\n");
         printf("********** Sotto Menu Ora *********\n");
         printf("***********************************\n");
-        printf("\nFUSO ORARIO UTILIZZATO : GMT+2");
+        printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
         scanf(" %c", &c);
         break;
     // MENU DOVE SI CAMBIA DA on A off E NIENT ALTRO:
     case 2:
-        printf("\n**************************************\n");
-        printf("* Sotto Menu Blocco Automatico Porte *\n");
-        printf("**************************************\n\n");
-        printf("\nSTATO ATTUALE: %s\n", stati[blocco_porte]);
-        printf("1) PER MODIFICARE CAMBIARE STATO\n");
-        scanf("%d", &porte);
-        if(porte == 1){
-            if(blocco_porte == 1){
-                blocco_porte = 0;
-            }else
-            {
-                blocco_porte = 1;
+        esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
+        
+        while(!esciSottoMenu){
+            printf("\033[2J"); // PULISCO TERMINALE:
+            printf("\n**************************************\n");
+            printf("* Sotto Menu Blocco Automatico Porte *\n");
+            printf("**************************************\n\n");
+            printf("\nSTATO ATTUALE: %s\n", stati[blocco_porte]);
+            printf("1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n");
+            
+            c = getchar();
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'A':// FRECCIA SU ( per cambiare stato )
+                    if (blocco_porte == 1)
+                    {
+                        blocco_porte = 0;
+                    }else
+                    {
+                        blocco_porte = 1;
+                    } 
+                    break;
+                case 'B':// FRECCIA GIU' ( per cambiare stato )
+                    if (blocco_porte == 1)
+                    {
+                        blocco_porte = 0;
+                    }else
+                    {
+                        blocco_porte = 1;
+                    } 
+                    break;
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
             }
         }
         break;
     // MENU DOVE SI CAMBIA DA on A off E NIENT ALTRO:    
     case 3:
-        printf("\n*************************************\n");
-        printf("******** Sotto Menu Back-Home *******\n");
-        printf("*************************************\n");
-        printf("\nSTATO ATTUALE: %s\n", stati[back_home]);
-        printf("1) PER MODIFICARE CAMBIARE STATO\n");
-        scanf("%d", &home);
-        if(home == 1){
-            if (back_home == 1)
-            {
-                back_home = 0;
-            }else
-            {
-                back_home = 1;
-            }  
+        esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
+
+        while (!esciSottoMenu){
+            printf("\033[2J"); // PULISCO TERMINALE:
+            printf("\n*************************************\n");
+            printf("******** Sotto Menu Back-Home *******\n");
+            printf("*************************************\n");
+            printf("\nSTATO ATTUALE: %s\n", stati[back_home]);
+            printf("1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n");
+            c = getchar();
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'A':// FRECCIA SU ( per cambiare stato )
+                    if (back_home == 1)
+                    {
+                        back_home = 0;
+                    }else
+                    {
+                        back_home = 1;
+                    } 
+                    break;
+                case 'B':// FRECCIA GIU' ( per cambiare stato )
+                    if (back_home == 1)
+                    {
+                        back_home = 0;
+                    }else
+                    {
+                        back_home = 1;
+                    } 
+                    break;
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
+            }
         }
+        
         break;
     // MENU FRECCE DIREZIONALI:
     case 4:
         if(modalità == 2244){
-            printf("\n*************************************\n");
-            printf("* Sotto Menu Check Frecce Direzione *\n");
-            printf("*************************************\n");
-            printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
-            printf("1) PER MODIFICARE QUANTITA' LAMPEGGI\n");
-            scanf("%d", &lampeggi);
-            // UTENTE SCEGLIE, MA DEVE ESSERE NEL RANGE ALTRIMENTI PRENDE L'ESTREMO PIU' VICINO:
-            if(lampeggi == 1){
-                    printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
-                    scanf("%d", &lampeggio[0]);
-                    if(lampeggio[0] < 2){
-                        lampeggio[0] = 2;
-                    }else if(lampeggio[0] > 5){
-                        lampeggio[0] = 5;
-                    }
+            esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
+
+            while(!esciSottoMenu){
+                printf("\033[2J"); // PULISCO TERMINALE:
+                printf("\n*************************************\n");
+                printf("* Sotto Menu Check Frecce Direzione *\n");
+                printf("*************************************\n");
+                printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
+                printf("1) PER MODIFICARE QUANTITA' LAMPEGGI\n");
+
+                c = getchar();
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'A':// FRECCIA SU ( per cambiare stato )
+                // UTENTE SCEGLIE, MA DEVE ESSERE NEL RANGE ALTRIMENTI PRENDE L'ESTREMO PIU' VICINO:
+                        printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
+                        scanf("%d", &lampeggio[0]);
+                        if(lampeggio[0] < 2){
+                            lampeggio[0] = 2;
+                        }else if(lampeggio[0] > 5){
+                            lampeggio[0] = 5;
+                        }
+                    break;
+                case 'B':// FRECCIA GIU' ( per cambiare stato )
+                    // UTENTE SCEGLIE, MA DEVE ESSERE NEL RANGE ALTRIMENTI PRENDE L'ESTREMO PIU' VICINO:
+                        printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
+                        scanf("%d", &lampeggio[0]);
+                        if(lampeggio[0] < 2){
+                            lampeggio[0] = 2;
+                        }else if(lampeggio[0] > 5){
+                            lampeggio[0] = 5;
+                        }
+                    break;
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
             }
+            }
+            
         }else{
-            // MENU STATICO CHE NON SERVE IMPLEMENTARE:
-            printf("\n***********************************\n");
-            printf("******* Sotto Menu Check Olio *****\n");
-            printf("***********************************\n");
-            scanf(" %c", &c);
+                c = getchar();
+
+            while (!esciSottoMenu)
+            {
+                printf("\033[2J"); // PULISCO TERMINALE:
+                // MENU STATICO CHE NON SERVE IMPLEMENTARE:
+                printf("\n***********************************\n");
+                printf("******* Sotto Menu Check Olio *****\n");
+                printf("***********************************\n");
+                
+                // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
+            }
+            }
+            
+            
         }
         break;
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
     case 5:
-        printf("\n*************************************\n");
-        printf("******* Sotto Menu Check Olio *******\n");
-        printf("*************************************\n");
-        scanf(" %c", &c);
+        esciSottoMenu = 0;
+        
+        while (!esciSottoMenu)
+        {
+            c = getchar();
+
+            printf("\033[2J"); // PULISCO TERMINALE:
+            printf("\n*************************************\n");
+            printf("******* Sotto Menu Check Olio *******\n");
+            printf("*************************************\n");
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
+                    printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
+                    c = getchar();
+                    break;
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+        
         break;
     // MENU DOVE SI PUO' FARE SOLO RESET DELLA PRESSIONE:
     case 6:
-        printf("\n************************************\n");
-        printf("* Sotto Menu Reset Pressione Gomme *\n");
-        printf("************************************\n");
-        scanf("%d", &reset);
-        if(reset == 1){
-            printf("\nPRESSIONE RESETTATA CORRETTAMENTE");
-            scanf(" %c", &c);
+        esciSottoMenu = 0;
+        
+        while (!esciSottoMenu)
+        {
+            c = getchar();
+
+            printf("\033[2J"); // PULISCO TERMINALE:
+            printf("\n************************************\n");
+            printf("* Sotto Menu Reset Pressione Gomme *\n");
+            printf("************************************\n");
+
+            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+            if (c == '\033' && getchar() == '[') {
+                c = getchar();
+                switch (c){
+                case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
+                    printf("\nPRESSIONE RESETTATA CORRETTAMENTE\n");
+                    c = getchar();
+                    break;
+                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                    esciSottoMenu = 1;
+                    break;
+                default:
+                    break;
+                }
+            }
         }
         break;
     // DEFAULT:
@@ -244,10 +391,11 @@ void stampaMenu(int modalità) {
             default:
                 break;
             }
+        }
     }
 }
-}
 
+// MAIN:
 int main(int argc, char const *argv[]) {
     // VARIABILI LOCALI MAIN:
     int modalità;
