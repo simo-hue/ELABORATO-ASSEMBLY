@@ -96,7 +96,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         }else{
             // MENU STATICO CHE NON SERVE IMPLEMENTARE
             printf("\n***********************************\n");
-            printf("******* Sotto Menu Check Olio ******\n");
+            printf("******* Sotto Menu Check Olio *****\n");
             printf("***********************************\n");
             scanf(" %c", &c);
         }
