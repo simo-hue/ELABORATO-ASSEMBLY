@@ -139,7 +139,7 @@ void stampa(int user_type){
 }
 
 // STAMPA MENU PRINCIPALE PERSONALIZZATO IN BASE ALL'UTENTE:
-void stampaMenu(int user_type, int riga){
+void stampaMenu(int user_type){
 
     // TROVO TEMPO ISTANTANEO: 
     time_t current_time;
@@ -155,6 +155,9 @@ void stampaMenu(int user_type, int riga){
 
     if(user_type == 2244){ // Modalità SUPERVISOR
         // STAMPO:
+        printf("\n*************************************\n");
+        printf("*********** MENU PRINCIPALE *********\n");
+        printf("*************************************\n");
         printf("1) Setting Automobile ( Supervisor):\n");
         printf("2) Data: %02d/%02d/%04d\n", dt.day, dt.month, dt.year);
         printf("3) Ora: %02d:%02d\n", dt.hour, dt.minute);
@@ -176,27 +179,4 @@ void stampaMenu(int user_type, int riga){
     }
 
     stampa(user_type);
-}
-
-int main(int argc, char const *argv[])
-{
-    // VARIABILI LOCALI MAIN:
-    int modalità;
-    
-    // CONTROLLO SE UTENTE HA PASSATO PARAMETRI DA LINEA DI COMANDO:
-    if(argc == 2){ // Se utente ha passato un parametro
-         modalità = atoi(argv[1]); // Modalità SUPERVISOR
-    } else{
-        modalità = 1; // modalità DEFAULT
-    }
-
-    // MOSTRO IL MENU ALL'UTENTE
-    while(end == 0){
-        printf("\n\n------------------------------------\n");
-        stampaMenu(modalità, 0);
-
-    }
-    
-    /* code */
-    return 0;
 }
