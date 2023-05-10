@@ -44,6 +44,7 @@ void stampa(int user_type){
         break;
     
     case 2:
+        // MENU STATICO CHE NON SERVE IMPLEMENTARE
         printf("\n***********************************\n");
         printf("********* Sotto Menu Data *********\n");
         printf("***********************************\n");
@@ -51,6 +52,7 @@ void stampa(int user_type){
         break;
     
     case 3:
+        // MENU STATICO CHE NON SERVE IMPLEMENTARE
         printf("\n***********************************\n");
         printf("********** Sotto Menu Ora *********\n");
         printf("***********************************\n");
@@ -64,6 +66,7 @@ void stampa(int user_type){
         printf("\nSTATO ATTUALE: %s\n", stati[blocco_porte]);
         printf("1) PER MODIFICARE CAMBIARE STATO\n");
         scanf("%d", &porte);
+        // Se vuole cambiare passa da uno stato all'altro, non ci sono altre scelte
         if(porte == 1){
             if(blocco_porte == 1){
                 blocco_porte = 0;
@@ -81,6 +84,7 @@ void stampa(int user_type){
         printf("\nSTATO ATTUALE: %s\n", stati[back_home]);
         printf("1) PER MODIFICARE CAMBIARE STATO\n");
         scanf("%d", &home);
+        // Se vuole cambiare passa da uno stato all'altro, non ci sono altre scelte
         if(home == 1){
             if (back_home == 1)
             {
@@ -105,6 +109,7 @@ void stampa(int user_type){
         printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
         printf("1) PER MODIFICARE QUANTITA' LAMPEGGI\n");
         scanf("%d", &lampeggi);
+        // Utente può scegliere, ma se fuori range prenderà l'estremo più vicino
         if(lampeggi == 1){
                 printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
                 scanf("%d", &lampeggio[0]);
@@ -117,6 +122,7 @@ void stampa(int user_type){
         break;
     
     case 8:
+        // Menu dove si può resettare la pressione e basta
         printf("\n************************************\n");
         printf("* Sotto Menu Reset Pressione Gomme *\n");
         printf("************************************\n");
