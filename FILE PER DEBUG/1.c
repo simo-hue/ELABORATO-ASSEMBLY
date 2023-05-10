@@ -19,7 +19,8 @@ int end = 0, lampeggio[3] = {3, 2, 5}; // lampeggio[0] valore salvato, lampeggio
 struct datetime dt;
 
 void sottoMenu(int modalità, int indice, char vociMenu[][100], int dim){
-    char scelta, lampeggi, reset, porte, home;
+    char scelta;
+    int lampeggi, reset, porte, home;
     switch (indice)
     {
     case 2:
@@ -29,14 +30,14 @@ void sottoMenu(int modalità, int indice, char vociMenu[][100], int dim){
         printf("\nFUSO ORARIO UTILIZZATO : GMT+2");
         scanf(" %c", &scelta);
         break;
-    case 3:
+    case 1:
         printf("\n***********************************\n");
         printf("********* Sotto Menu Data *********\n");
         printf("***********************************\n");
         printf("\nFUSO ORARIO UTILIZZATO : GMT+2");
         scanf(" %c", &scelta);
         break;
-    case 4:
+    case 3:
         printf("\n**************************************\n");
         printf("* Sotto Menu Blocco Automatico Porte *\n");
         printf("**************************************\n\n");
@@ -53,7 +54,7 @@ void sottoMenu(int modalità, int indice, char vociMenu[][100], int dim){
             }
         }
         break;
-    case 5:
+    case 4:
         printf("\n*************************************\n");
         printf("******** Sotto Menu Back-Home *******\n");
         printf("*************************************\n");
@@ -71,12 +72,12 @@ void sottoMenu(int modalità, int indice, char vociMenu[][100], int dim){
             }  
         }
         break;
-    case 6:
+    case 5:
         printf("\n*************************************\n");
         printf("******* Sotto Menu Check Olio *******\n");
         printf("*************************************\n");
         break;
-    case 7:
+    case 6:
         printf("\n*************************************\n");
         printf("* Sotto Menu Check Frecce Direzione *\n");
         printf("*************************************\n");
@@ -94,7 +95,7 @@ void sottoMenu(int modalità, int indice, char vociMenu[][100], int dim){
                 }
         }
         break;
-        case 8:
+        case 7:
         // Menu dove si può resettare la pressione e basta
         printf("\n************************************\n");
         printf("* Sotto Menu Reset Pressione Gomme *\n");
