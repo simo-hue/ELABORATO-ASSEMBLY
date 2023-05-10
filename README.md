@@ -10,4 +10,4 @@ DA FARE:
 - Scelta progettuale di Restituire il Fuso orario nel sotto 
   menu ora / data visto che non bisognava implementare nessuna funzione
 
-- 
+- Ogni altro carattere che non siano freccette il programma esce

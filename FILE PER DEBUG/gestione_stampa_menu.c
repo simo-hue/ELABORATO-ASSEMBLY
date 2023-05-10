@@ -1,13 +1,14 @@
 #include <stdio.h>
-
+#define num_voci_menu_standard 6
+#define num_voci_menu_superuser 8
 int main() {
     char c;
     int posizione = 0;
-    int num_voci_menu = 15;
-
+    char vociMenu[num_voci_menu_standard][100] = {"1) Setting Automobile", "2) Data;", "3) Ora;", "4) Blocco Automatico Porte;", "5) Back-Home;", "6) Check Olio"};
+    char vociMenuSuperUser[num_voci_menu_superuser][100] = {"1) Setting Automobile", "2) Data;", "3) Ora;", "4) Blocco Automatico Porte;", "5) Back-Home;", "6) Check Olio", "7) Frecce Direzione", "8) Reset Pressione Gomme"};
     printf("Menu:\n");
-    for (int i = 0; i < num_voci_menu; i++) {
-        printf("- Voce %d\n", i + 1);
+    for (int i = 0; i < num_voci_menu_standard; i++) {
+        printf("- %s\n", vociMenu[i]); // stampa la voce del menu
     }
     printf("\n");
     printf("Premi freccia sinistra o destra per scorrere il menu\n");
@@ -16,11 +17,11 @@ int main() {
         // Stampa il menu
         printf("\033[2J"); // Pulisci lo schermo
         printf("Menu:\n");
-        for (int i = 0; i < num_voci_menu; i++) {
+        for (int i = 0; i < num_voci_menu_standard; i++) {
             if (i == posizione) {
-                printf("> Voce %d\n", i + 1);
+                printf("> %s\n", vociMenu[i]); // stampa la voce selezionata
             } else {
-                printf("  Voce %d\n", i + 1);
+                printf("  %s\n", vociMenu[i]); // stampa la voce non selezionata
             }
         }
         printf("\n");
@@ -31,13 +32,13 @@ int main() {
         // Determina quale freccia è stata premuta
         if (c == '\033' && getchar() == '[') {
             c = getchar();
-            if (c == 'C') {
-                // Freccia destra
-                if (posizione < num_voci_menu - 1) {
+            if (c == 'B') {
+                // Freccia giù
+                if (posizione < num_voci_menu_standard - 1) {
                     posizione++;
                 }
-            } else if (c == 'D') {
-                // Freccia sinistra
+            } else if (c == 'A') {
+                // Freccia su
                 if (posizione > 0) {
                     posizione--;
                 }
