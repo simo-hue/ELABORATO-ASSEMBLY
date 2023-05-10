@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define num_voci_menu_standard 6
-#define num_voci_menu_superuser 8
+#define num_voci_menu_standard 5
+#define num_voci_menu_superuser 7
 
 // VARIABILI GLOBALI:
 struct datetime {
@@ -77,12 +77,6 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
         break;
     case 4:
         printf("\n*************************************\n");
-        printf("******* Sotto Menu Check Olio *******\n");
-        printf("*************************************\n");
-        scanf(" %c", &c);
-        break;
-    case 5:
-        printf("\n*************************************\n");
         printf("* Sotto Menu Check Frecce Direzione *\n");
         printf("*************************************\n");
         printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
@@ -98,6 +92,12 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
                     lampeggio[0] = 5;
                 }
         }
+        break;
+    case 5:
+        printf("\n*************************************\n");
+        printf("******* Sotto Menu Check Olio *******\n");
+        printf("*************************************\n");
+        scanf(" %c", &c);
         break;
     case 6:
         // Menu dove si può resettare la pressione e basta
@@ -130,10 +130,9 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[1], "2) Ora: ");
             strcpy(vociMenu[2], "3) Blocco Automatico Porte: ");
             strcpy(vociMenu[3], "4) Back-Home: ");
-            strcpy(vociMenu[4], "5) Check Olio;");
-            strcpy(vociMenu[5], "6) Frecce Direzione: ");
+            strcpy(vociMenu[4], "5) Frecce Direzione: ");
+            strcpy(vociMenu[5], "6) Check olio;");
             strcpy(vociMenu[6], "7) Reset Pressione Gomme");
-            strcpy(vociMenu[7], " ");
             
     }else{
             strcpy(vociMenu[0], "1) Data: ");
@@ -141,7 +140,6 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[2], "3) Blocco Automatico Porte: ");
             strcpy(vociMenu[3], "4) Back-Home: ");
             strcpy(vociMenu[4], "5) Check Olio;");
-            strcpy(vociMenu[5], " ");
     }
 
     printf("Setting Automobile:\n");
