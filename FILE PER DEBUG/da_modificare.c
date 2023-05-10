@@ -25,31 +25,22 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
     switch (indice)
     {
     case 0:
-        if( dim > num_voci_menu_standard){
-            printf("\n*************************************\n");
-            printf("* Setting Automobile ( supervisor ) *");
-            printf("\n*************************************\n");
-        }else{
-            printf("\n***********************************\n");
-            printf("** Sotto Menu Setting Automobile **");
-            printf("\n***********************************\n");
-        }
-        break;
-    case 1:
         // MENU STATICO CHE NON SERVE IMPLEMENTARE
         printf("\n***********************************\n");
         printf("********* Sotto Menu Data *********\n");
         printf("***********************************\n");
         printf("\nFUSO ORARIO UTILIZZATO : GMT+2");
+        scanf(" %c", &c);
         break;
-    case 2:
+    case 1:
         // MENU STATICO CHE NON SERVE IMPLEMENTARE
         printf("\n***********************************\n");
         printf("********** Sotto Menu Ora *********\n");
         printf("***********************************\n");
         printf("\nFUSO ORARIO UTILIZZATO : GMT+2");
+        scanf(" %c", &c);
         break;
-    case 3:
+    case 2:
         printf("\n**************************************\n");
         printf("* Sotto Menu Blocco Automatico Porte *\n");
         printf("**************************************\n\n");
@@ -66,7 +57,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
             }
         }
         break;
-    case 4:
+    case 3:
         printf("\n*************************************\n");
         printf("******** Sotto Menu Back-Home *******\n");
         printf("*************************************\n");
@@ -84,12 +75,13 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
             }  
         }
         break;
-    case 5:
+    case 4:
         printf("\n*************************************\n");
         printf("******* Sotto Menu Check Olio *******\n");
         printf("*************************************\n");
+        scanf(" %c", &c);
         break;
-    case 6:
+    case 5:
         printf("\n*************************************\n");
         printf("* Sotto Menu Check Frecce Direzione *\n");
         printf("*************************************\n");
@@ -107,7 +99,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice){
                 }
         }
         break;
-    case 7:
+    case 6:
         // Menu dove si può resettare la pressione e basta
         printf("\n************************************\n");
         printf("* Sotto Menu Reset Pressione Gomme *\n");
@@ -134,26 +126,26 @@ void stampaMenu(int modalità) {
     char vociMenu[dim][100];
     // popolo il menu da stampare
     if(modalità == 2244){
-            strcpy(vociMenu[0], "1) Setting Automobile;");
-            strcpy(vociMenu[1], "2) Data: ");
-            strcpy(vociMenu[2], "3) Ora: ");
-            strcpy(vociMenu[3], "4) Blocco Automatico Porte: ");
-            strcpy(vociMenu[4], "5) Back-Home: ");
-            strcpy(vociMenu[5], "6) Check Olio;");
-            strcpy(vociMenu[6], "7) Frecce Direzione;");
-            strcpy(vociMenu[7], "8) Reset Pressione Gomme");
+            strcpy(vociMenu[0], "1) Data: ");
+            strcpy(vociMenu[1], "2) Ora: ");
+            strcpy(vociMenu[2], "3) Blocco Automatico Porte: ");
+            strcpy(vociMenu[3], "4) Back-Home: ");
+            strcpy(vociMenu[4], "5) Check Olio;");
+            strcpy(vociMenu[5], "6) Frecce Direzione: ");
+            strcpy(vociMenu[6], "7) Reset Pressione Gomme");
+            strcpy(vociMenu[7], " ");
             
     }else{
-            strcpy(vociMenu[0], "1) Setting Automobile;");
-            strcpy(vociMenu[1], "2) Data: ");
-            strcpy(vociMenu[2], "3) Ora: ");
-            strcpy(vociMenu[3], "4) Blocco Automatico Porte: ");
-            strcpy(vociMenu[4], "5) Back-Home;");
-            strcpy(vociMenu[5], "6) Check Olio;");
+            strcpy(vociMenu[0], "1) Data: ");
+            strcpy(vociMenu[1], "2) Ora: ");
+            strcpy(vociMenu[2], "3) Blocco Automatico Porte: ");
+            strcpy(vociMenu[3], "4) Back-Home: ");
+            strcpy(vociMenu[4], "5) Check Olio;");
+            strcpy(vociMenu[5], " ");
     }
 
-    printf("Menu:\n");
-    for (int i = 0; i < num_voci_menu_standard; i++) {
+    printf("Setting Automobile:\n");
+    for (int i = 0; i < dim; i++) {
         printf("- %s\n", vociMenu[i]); // stampa la voce del menu
     }
     printf("\n");
@@ -162,7 +154,7 @@ void stampaMenu(int modalità) {
     while (1) {
         // Stampa il menu
         printf("\033[2J"); // Pulisci lo schermo
-        printf("Menu:\n");
+        printf("Setting Automobile:\n");
         for (int i = 0; i < dim; i++) {
             // TROVO TEMPO ISTANTANEO: 
                 time_t current_time;
@@ -177,6 +169,10 @@ void stampaMenu(int modalità) {
                 dt.minute = local_time->tm_min;
             switch (i)
             {
+            
+                case 0:
+                    printf("\n");
+                    break;
                 case 1:
                     printf("%02d/%02d/%04d\n", dt.day, dt.month, dt.year);
                     break;
@@ -188,6 +184,13 @@ void stampaMenu(int modalità) {
                     break;
                 case 4:
                     printf("%s\n", stati[back_home]);
+                    break;
+                case 5:
+                    if(modalità == 2244){
+                        printf("%d\n", lampeggio[0]);
+                    }else{
+                        printf("\n");
+                    }
                     break;
                 default:
                     printf("\n");
