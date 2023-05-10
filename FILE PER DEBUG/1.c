@@ -59,25 +59,24 @@ void stampaMenu(int modalità) {
         // Determina quale freccia è stata premuta
         if (c == '\033' && getchar() == '[') {
             c = getchar();
-            if (c == 'B') {
-                // Freccia giù
+            switch (c)
+            {
+            case 'B':// Freccia giù
                 if (posizione < dim - 1) {
                     posizione++;
                 }
-            } else if (c == 'A') {
-                // Freccia su
+                break;
+            case 'A':// Freccia su
                 if (posizione > 0) {
                     posizione--;
                 }
-            } else {
-                printf("Input non valido\n");
+                break;
+            default:
+                break;
             }
-        } else {
-            printf("Input non valido\n");
-        }
     }
 }
-
+}
 int main(int argc, char const *argv[]) {
     // VARIABILI LOCALI MAIN:
     int modalità;
