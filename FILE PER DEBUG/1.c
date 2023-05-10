@@ -3,6 +3,19 @@
 #include <string.h>
 #define num_voci_menu_standard 6
 #define num_voci_menu_superuser 8
+
+void sottoMenu(int modalità, int indice, char vociMenu[][100], int dim){
+    switch (indice)
+    {
+    case 1:
+        printf("Sotto menu %s", vociMenu[indice]);
+        break;
+    
+    default:
+        break;
+    }
+}
+
 void stampaMenu(int modalità) {
     char c;
     int posizione = 0, dim;
@@ -71,12 +84,16 @@ void stampaMenu(int modalità) {
                     posizione--;
                 }
                 break;
+            case 'C':// Freccia per sotto-menu
+                sottoMenu(modalità, posizione, vociMenu, dim);
+                break;
             default:
                 break;
             }
     }
 }
 }
+
 int main(int argc, char const *argv[]) {
     // VARIABILI LOCALI MAIN:
     int modalità;
