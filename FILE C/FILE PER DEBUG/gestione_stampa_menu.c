@@ -190,7 +190,6 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 printf("\n***********************************\n");
                 printf("******* Sotto Menu Check Olio *****\n");
                 printf("***********************************\n");
-                
                 printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -217,12 +216,12 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         
         while (!esciSottoMenu)
         {
-            printf("\033[2J"); // PULISCO TERMINALE:
+                c = getchar();
+                printf("\033[2J"); // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
                 printf("\n***********************************\n");
                 printf("******* Sotto Menu Check Olio *****\n");
                 printf("***********************************\n");
-                
                 printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -241,7 +240,6 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                     }
                 }
         }
-        
         break;
     // MENU DOVE SI PUO' FARE SOLO RESET DELLA PRESSIONE:
     case 6:
@@ -255,7 +253,8 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
             printf("\n************************************\n");
             printf("* Sotto Menu Reset Pressione Gomme *\n");
             printf("************************************\n");
-
+            printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN RESET DELLA PRESSIONE\n");
+            
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
             if (c == '\033' && getchar() == '[') {
                 c = getchar();
