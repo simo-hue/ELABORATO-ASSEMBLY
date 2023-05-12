@@ -180,10 +180,8 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                         break;  
                     }
                 }
-            }
-            
+            }    
         }else{
-
             while (!esciSottoMenu)
             {
                 c = getchar();
@@ -211,8 +209,6 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                     }
                 }
             }
-            
-            
         }
         break;
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
