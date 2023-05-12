@@ -187,57 +187,53 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
             if (c == '\033' && getchar() == '[') {
                 c = getchar();
                 switch (c){
-                case 'A':// FRECCIA SU ( per cambiare stato )
-                // UTENTE SCEGLIE, MA DEVE ESSERE NEL RANGE ALTRIMENTI PRENDE L'ESTREMO PIU' VICINO:
-                        printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
-                        scanf("%d", &lampeggio[0]);
-                        if(lampeggio[0] < 2){
-                            lampeggio[0] = 2;
-                        }else if(lampeggio[0] > 5){
-                            lampeggio[0] = 5;
-                        }
-                    break;
-                case 'B':// FRECCIA GIU' ( per cambiare stato )
+                    case 'C':// FRECCIA SU ( per cambiare stato )
                     // UTENTE SCEGLIE, MA DEVE ESSERE NEL RANGE ALTRIMENTI PRENDE L'ESTREMO PIU' VICINO:
-                        printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
-                        scanf("%d", &lampeggio[0]);
-                        if(lampeggio[0] < 2){
-                            lampeggio[0] = 2;
-                        }else if(lampeggio[0] > 5){
-                            lampeggio[0] = 5;
-                        }
-                    break;
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
-                    break;
-                default:
-                    break;
+                            printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
+                            scanf("%d", &lampeggio[0]);
+                            if(lampeggio[0] < 2){
+                                lampeggio[0] = 2;
+                            }else if(lampeggio[0] > 5){
+                                lampeggio[0] = 5;
+                            }
+                        break;
+                    case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                        esciSottoMenu = 1;
+                        break;
+                    default:
+                        break;  
+                    }
                 }
-            }
             }
             
         }else{
-                c = getchar();
 
             while (!esciSottoMenu)
             {
+                c = getchar();
                 printf("\033[2J"); // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
                 printf("\n***********************************\n");
                 printf("******* Sotto Menu Check Olio *****\n");
                 printf("***********************************\n");
                 
+                printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
+                
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
-                    break;
-                default:
-                    break;
+                if (c == '\033' && getchar() == '[') {
+                    c = getchar();
+                    switch (c){
+                    case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
+                        printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
+                        c = getchar();
+                        break;
+                    case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                        esciSottoMenu = 1;
+                        break;
+                    default:
+                        break;
+                    }
                 }
-            }
             }
             
             
@@ -249,28 +245,29 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         
         while (!esciSottoMenu)
         {
-            c = getchar();
-
             printf("\033[2J"); // PULISCO TERMINALE:
-            printf("\n*************************************\n");
-            printf("******* Sotto Menu Check Olio *******\n");
-            printf("*************************************\n");
-
-            // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
-                case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
-                    printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
+                // MENU STATICO CHE NON SERVE IMPLEMENTARE:
+                printf("\n***********************************\n");
+                printf("******* Sotto Menu Check Olio *****\n");
+                printf("***********************************\n");
+                
+                printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
+                
+                // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
+                if (c == '\033' && getchar() == '[') {
                     c = getchar();
-                    break;
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
-                    break;
-                default:
-                    break;
+                    switch (c){
+                    case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
+                        printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
+                        c = getchar();
+                        break;
+                    case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                        esciSottoMenu = 1;
+                        break;
+                    default:
+                        break;
+                    }
                 }
-            }
         }
         
         break;
