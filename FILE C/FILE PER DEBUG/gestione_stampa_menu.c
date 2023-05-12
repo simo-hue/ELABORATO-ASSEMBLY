@@ -97,22 +97,10 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 c = getchar();
                 switch (c){
                 case 'A':// FRECCIA SU ( per cambiare stato )
-                    if (blocco_porte == 1)
-                    {
-                        blocco_porte = 0;
-                    }else
-                    {
-                        blocco_porte = 1;
-                    } 
+                    blocco_porte = !blocco_porte; 
                     break;
                 case 'B':// FRECCIA GIU' ( per cambiare stato )
-                    if (blocco_porte == 1)
-                    {
-                        blocco_porte = 0;
-                    }else
-                    {
-                        blocco_porte = 1;
-                    } 
+                    blocco_porte = !blocco_porte;
                     break;
                 case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
                     esciSottoMenu = 1;
@@ -141,22 +129,10 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 c = getchar();
                 switch (c){
                 case 'A':// FRECCIA SU ( per cambiare stato )
-                    if (back_home == 1)
-                    {
-                        back_home = 0;
-                    }else
-                    {
-                        back_home = 1;
-                    } 
+                    back_home = !back_home;
                     break;
                 case 'B':// FRECCIA GIU' ( per cambiare stato )
-                    if (back_home == 1)
-                    {
-                        back_home = 0;
-                    }else
-                    {
-                        back_home = 1;
-                    } 
+                    back_home = !back_home;
                     break;
                 case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
                     esciSottoMenu = 1;
