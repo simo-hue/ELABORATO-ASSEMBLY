@@ -32,10 +32,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
         while(!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
-            printf("\n***********************************\n");
-            printf("********* Sotto Menu Data *********\n");
-            printf("***********************************\n");
-            printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
+            printf("\n***********************************\n********* Sotto Menu Data *********\n***********************************\n\nFUSO ORARIO UTILIZZATO : GMT+2\n");
 
             c = getchar();
 
@@ -58,10 +55,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
         while(!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
-            printf("\n***********************************\n");
-            printf("********** Sotto Menu Ora *********\n");
-            printf("***********************************\n");
-            printf("\nFUSO ORARIO UTILIZZATO : GMT+2\n");
+            printf("\n***********************************\n********** Sotto Menu Ora *********\n***********************************\n\nFUSO ORARIO UTILIZZATO : GMT+2\n");
 
             c = getchar();
 
@@ -84,11 +78,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         
         while(!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
-            printf("\n**************************************\n");
-            printf("* Sotto Menu Blocco Automatico Porte *\n");
-            printf("**************************************\n\n");
-            printf("\nSTATO ATTUALE: %s\n", stati[blocco_porte]);
-            printf("1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n");
+            printf("\n**************************************\n* Sotto Menu Blocco Automatico Porte *\n**************************************\n\n\nSTATO ATTUALE: %s\n1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n", stati[blocco_porte]);
             
             c = getchar();
 
@@ -117,11 +107,8 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
         while (!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
-            printf("\n*************************************\n");
-            printf("******** Sotto Menu Back-Home *******\n");
-            printf("*************************************\n");
-            printf("\nSTATO ATTUALE: %s\n", stati[back_home]);
-            printf("1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n");
+            printf("\n*************************************\n******** Sotto Menu Back-Home *******\n*************************************\n\nSTATO ATTUALE: %s\n1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n", stati[back_home]);
+
             c = getchar();
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -151,11 +138,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
             while(!esciSottoMenu){
                 printf("\033[2J"); // PULISCO TERMINALE:
-                printf("\n*************************************\n");
-                printf("* Sotto Menu Check Frecce Direzione *\n");
-                printf("*************************************\n");
-                printf("\nSTATO ATTUALE: %d\n", lampeggio[0]);
-                printf("1) PER MODIFICARE QUANTITA' LAMPEGGI\n");
+                printf("\n*************************************\n* Sotto Menu Check Frecce Direzione *\n*************************************\n\nSTATO ATTUALE: %d\n1) FRECCIA DESTRA PER MODIFICARE QUANTITA' LAMPEGGI\n", lampeggio[0]);
 
                 c = getchar();
 
@@ -187,10 +170,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 c = getchar();
                 printf("\033[2J"); // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
-                printf("\n***********************************\n");
-                printf("******* Sotto Menu Check Olio *****\n");
-                printf("***********************************\n");
-                printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
+                printf("\n***********************************\n******* Sotto Menu Check Olio *****\n***********************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
                 if (c == '\033' && getchar() == '[') {
@@ -219,10 +199,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 c = getchar();
                 printf("\033[2J"); // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
-                printf("\n***********************************\n");
-                printf("******* Sotto Menu Check Olio *****\n");
-                printf("***********************************\n");
-                printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
+                printf("\n***********************************\n******* Sotto Menu Check Olio *****\n***********************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
                 if (c == '\033' && getchar() == '[') {
@@ -250,10 +227,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
             c = getchar();
 
             printf("\033[2J"); // PULISCO TERMINALE:
-            printf("\n************************************\n");
-            printf("* Sotto Menu Reset Pressione Gomme *\n");
-            printf("************************************\n");
-            printf("\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN RESET DELLA PRESSIONE\n");
+            printf("\n************************************\n* Sotto Menu Reset Pressione Gomme *\n************************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN RESET DELLA PRESSIONE\n");
             
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
             if (c == '\033' && getchar() == '[') {
