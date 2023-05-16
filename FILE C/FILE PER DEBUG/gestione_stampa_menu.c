@@ -64,24 +64,23 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     case 2:
         esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
         
+        c = getchar(); // ALTRIMENTI NON VISUALIZZA IL SOTTOMENU
+
         while(!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
             printf("\n**************************************\n* Sotto Menu Blocco Automatico Porte *\n**************************************\n\n\nSTATO ATTUALE: %s\n1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n", stati[blocco_porte]);
-            
-            c = getchar();
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
+            fgets(input, sizeof(input), stdin);
+            if (input[0] == '\n') {
+                esciSottoMenu = 1;
+            } else if (input[0] == '\033' && input[1] == '[') {
+                switch (input[2]){
                 case 'A':// FRECCIA SU ( per cambiare stato )
                     blocco_porte = !blocco_porte; 
                     break;
                 case 'B':// FRECCIA GIU' ( per cambiare stato )
                     blocco_porte = !blocco_porte;
-                    break;
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
                     break;
                 default:
                     break;
@@ -93,24 +92,24 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     case 3:
         esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
 
+        c = getchar();
+
         while (!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
             printf("\n*************************************\n******** Sotto Menu Back-Home *******\n*************************************\n\nSTATO ATTUALE: %s\n1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n", stati[back_home]);
 
-            c = getchar();
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
+            fgets(input, sizeof(input), stdin);
+            if (input[0] == '\n') {
+                esciSottoMenu = 1;
+            } else if (input[0] == '\033' && input[1] == '[') {
+                switch (input[2]){
                 case 'A':// FRECCIA SU ( per cambiare stato )
                     back_home = !back_home;
                     break;
                 case 'B':// FRECCIA GIU' ( per cambiare stato )
                     back_home = !back_home;
-                    break;
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
                     break;
                 default:
                     break;
@@ -124,16 +123,18 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         if(modalità == 2244){
             esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
 
+            c = getchar();
+
             while(!esciSottoMenu){
                 printf("\033[2J"); // PULISCO TERMINALE:
                 printf("\n*************************************\n* Sotto Menu Check Frecce Direzione *\n*************************************\n\nSTATO ATTUALE: %d\n1) FRECCIA DESTRA PER MODIFICARE QUANTITA' LAMPEGGI\n", lampeggio[0]);
 
-                c = getchar();
-
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
+            fgets(input, sizeof(input), stdin);
+            if (input[0] == '\n') {
+                esciSottoMenu = 1;
+            } else if (input[0] == '\033' && input[1] == '[') {
+                switch (input[2]){
                     case 'C':// FRECCIA SU ( per cambiare stato )
                     // UTENTE SCEGLIE, MA DEVE ESSERE NEL RANGE ALTRIMENTI PRENDE L'ESTREMO PIU' VICINO:
                             printf("\nINSERIRE N° LAMPEGGI ( Minimo = 2 e Massimo = 5 ): ");
@@ -143,6 +144,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                             }else if(lampeggio[0] > 5){
                                 lampeggio[0] = 5;
                             }
+                            c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
                         break;
                     case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
                         esciSottoMenu = 1;
@@ -153,23 +155,23 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 }
             }    
         }else{
+            c = getchar();
+
             while (!esciSottoMenu)
             {
-                c = getchar();
                 printf("\033[2J"); // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
                 printf("\n***********************************\n******* Sotto Menu Check Olio *****\n***********************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-                if (c == '\033' && getchar() == '[') {
-                    c = getchar();
-                    switch (c){
+                fgets(input, sizeof(input), stdin);
+                if (input[0] == '\n') {
+                    esciSottoMenu = 1;
+                } else if (input[0] == '\033' && input[1] == '[') {                
+                    switch (input[2]){
                     case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
                         printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
-                        c = getchar();
-                        break;
-                    case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                        esciSottoMenu = 1;
+                        c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
                         break;
                     default:
                         break;
@@ -182,23 +184,23 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     case 5:
         esciSottoMenu = 0;
         
+        c = getchar();
+
         while (!esciSottoMenu)
         {
-                c = getchar();
                 printf("\033[2J"); // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
                 printf("\n***********************************\n******* Sotto Menu Check Olio *****\n***********************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
                 // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-                if (c == '\033' && getchar() == '[') {
-                    c = getchar();
-                    switch (c){
+                fgets(input, sizeof(input), stdin);
+                if (input[0] == '\n') {
+                    esciSottoMenu = 1;
+                } else if (input[0] == '\033' && input[1] == '[') {                
+                    switch (input[2]){
                     case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
-                        printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
-                        c = getchar();
-                        break;
-                    case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                        esciSottoMenu = 1;
+                        printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n"); // QUALSIASI TASTO PREMUTO LO FARA' TORNARE NEL SOTTOMENU
+                        c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
                         break;
                     default:
                         break;
@@ -209,24 +211,24 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     // MENU DOVE SI PUO' FARE SOLO RESET DELLA PRESSIONE:
     case 6:
         esciSottoMenu = 0;
+
+        c = getchar();
         
         while (!esciSottoMenu)
         {
-            c = getchar();
 
             printf("\033[2J"); // PULISCO TERMINALE:
             printf("\n************************************\n* Sotto Menu Reset Pressione Gomme *\n************************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN RESET DELLA PRESSIONE\n");
             
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
-                case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
-                    printf("\nPRESSIONE RESETTATA CORRETTAMENTE\n");
-                    c = getchar();
-                    break;
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
+                fgets(input, sizeof(input), stdin);
+                if (input[0] == '\n') {
                     esciSottoMenu = 1;
+                } else if (input[0] == '\033' && input[1] == '[') {   
+                switch (input[2]){
+                case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
+                    printf("\nPRESSIONE RESETTATA CORRETTAMENTE\n"); // QUALSIASI TASTO PREMUTO LO FARA' TORNARE NEL SOTTOMENU
+                    c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
                     break;
                 default:
                     break;
