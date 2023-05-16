@@ -146,9 +146,6 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                             }
                             c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
                         break;
-                    case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                        esciSottoMenu = 1;
-                        break;
                     default:
                         break;  
                     }
@@ -171,7 +168,13 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                     switch (input[2]){
                     case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
                         printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n");
-                        c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
+                        
+                        fflush(stdout);  // PER ASSICURARMI CHE VENGA STAMPATA IMMEDIATAMENTE LA STRINGA DI CONFERMA
+
+                        time_t start_time = time(NULL);  // OTTENGO IL TEMPO INIZIALE
+
+                        while (time(NULL) - start_time < 2) {} // METTO IN PAUSA IL PROGRAMMA PER 2 SECONDI
+                        esciSottoMenu = 1; // DOPO CHE E' PASSATO IL TEMPO, TORNO AL MENU PRINCIPALE
                         break;
                     default:
                         break;
@@ -200,7 +203,13 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                     switch (input[2]){
                     case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
                         printf("\nCHECK OLIO ESEGUITO CORRETTAMENTE\n"); // QUALSIASI TASTO PREMUTO LO FARA' TORNARE NEL SOTTOMENU
-                        c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
+                        
+                        fflush(stdout);  // PER ASSICURARMI CHE VENGA STAMPATA IMMEDIATAMENTE LA STRINGA DI CONFERMA
+
+                        time_t start_time = time(NULL);  // OTTENGO IL TEMPO INIZIALE
+
+                        while (time(NULL) - start_time < 2) {} // METTO IN PAUSA IL PROGRAMMA PER 2 SECONDI
+                        esciSottoMenu = 1; // DOPO CHE E' PASSATO IL TEMPO, TORNO AL MENU PRINCIPALE
                         break;
                     default:
                         break;
@@ -228,7 +237,13 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
                 switch (input[2]){
                 case 'C':// FRECCIA DESTRA ( Vuole fare reset pressione )
                     printf("\nPRESSIONE RESETTATA CORRETTAMENTE\n"); // QUALSIASI TASTO PREMUTO LO FARA' TORNARE NEL SOTTOMENU
-                    c = getchar(); // ALTRIMENTI TORNA NEL MENU PRINCIPALE
+                    
+                        fflush(stdout);  // PER ASSICURARMI CHE VENGA STAMPATA IMMEDIATAMENTE LA STRINGA DI CONFERMA
+
+                        time_t start_time = time(NULL);  // OTTENGO IL TEMPO INIZIALE
+
+                        while (time(NULL) - start_time < 2) {} // METTO IN PAUSA IL PROGRAMMA PER 2 SECONDI
+                        esciSottoMenu = 1; // DOPO CHE E' PASSATO IL TEMPO, TORNO AL MENU PRINCIPALE
                     break;
                 default:
                     break;
