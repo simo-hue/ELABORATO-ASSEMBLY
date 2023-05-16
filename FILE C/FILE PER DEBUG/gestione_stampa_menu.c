@@ -340,13 +340,17 @@ void stampaMenu(int modalità) {
             switch (c)
             {
             case 'B':// FRECCIA GIU'
-                if (posizione < dim - 1) {
+                if (posizione < dim - 1) { // NEL CASO NON SIA IN FONDO AL MENU
                     posizione++;
+                }else if (posizione == dim - 1) { // EVENTUALMENTE RIPORTO SOPRA IL CURSORE
+                    posizione = 0;
                 }
                 break;
             case 'A':// FRECCIA SU
-                if (posizione > 0) {
+                if (posizione > 0) { // NEL CASO NON SIA IN CIMA AL MENU
                     posizione--;
+                }else if(posizione == 0){ // EVENTUALMENTE RIPORTO GIU' IL CURSORE
+                    posizione = dim - 1;
                 }
                 break;
             case 'D':// INVIO
