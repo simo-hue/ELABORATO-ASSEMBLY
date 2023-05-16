@@ -22,7 +22,7 @@ struct datetime dt;
 
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
 void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
-    char c;
+    char c, input[100];
     int scelta, lampeggi, reset, porte, home, esciSottoMenu = 0;
     switch (indice)
     {
@@ -30,22 +30,16 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     case 0:
         esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
 
+        c = getchar(); // ALTRIMENTI NON VISUALIZZA IL SOTTOMENU
+
         while(!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
             printf("\n***********************************\n********* Sotto Menu Data *********\n***********************************\n\nFUSO ORARIO UTILIZZATO : GMT+2\n");
 
-            c = getchar();
-
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
-                    break;
-                default:
-                    break;
-                }
+            fgets(input, sizeof(input), stdin);
+            if (input[0] == '\n') {
+                esciSottoMenu = 1;
             }
         }
         break;
@@ -53,22 +47,16 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
     case 1:
         esciSottoMenu = 0; // DEVE RIMANERE NEL SOTTO-MENU
 
+        c = getchar(); // ALTRIMENTI NON VISUALIZZA IL SOTTOMENU
+
         while(!esciSottoMenu){
             printf("\033[2J"); // PULISCO TERMINALE:
             printf("\n***********************************\n********** Sotto Menu Ora *********\n***********************************\n\nFUSO ORARIO UTILIZZATO : GMT+2\n");
 
-            c = getchar();
-
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
-            if (c == '\033' && getchar() == '[') {
-                c = getchar();
-                switch (c){
-                case 'D':// FRECCIA DESTRA ( Dovrebbe esserci invio )
-                    esciSottoMenu = 1;
-                    break;
-                default:
-                    break;
-                }
+            fgets(input, sizeof(input), stdin);
+            if (input[0] == '\n') {
+                esciSottoMenu = 1;
             }
         }
         break;
