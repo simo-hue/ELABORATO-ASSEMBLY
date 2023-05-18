@@ -222,7 +222,7 @@ et_stampacheck_c:
     leal acapo, %ecx
     movl acapo_len, %edx
     int $0x80
-    jmp et_ricevo_carattere
+    jmp input_loop
 
 
 et_ricevo_carattere:
@@ -241,6 +241,7 @@ et_ricevo_carattere:
     jne et_ricevo_carattere
     incl %esi
     movb tastiera(%esi), %al
+    movl $0, tastiera
     cmpb $65, %al
     je freccia_su
     cmpb $66, %al
