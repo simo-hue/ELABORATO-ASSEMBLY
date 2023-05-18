@@ -127,6 +127,7 @@ et_stampadata:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
+
 et_stampadata_c:
     movl $4, %eax
     movl $1, %ebx
@@ -143,13 +144,13 @@ et_stampaora:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
+
 et_stampaora_c:
     movl $4, %eax
     movl $1, %ebx
     leal ora, %ecx
     movl ora_len, %edx
     int $0x80
-
 
 et_stampa_blocco:
     movl pos_freccia, %eax
@@ -160,6 +161,7 @@ et_stampa_blocco:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
+
 et_stampablocco_c:
     movl $4, %eax
     movl $1, %ebx
@@ -184,6 +186,7 @@ et_stampaback:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
+
 et_stampaback_c:
     movl $4, %eax
     movl $1, %ebx
@@ -199,7 +202,6 @@ et_stampaback_c:
     leal off_len, %edx
     int $0x80
 
-
 et_stampacheck:
     movl pos_freccia, %eax
     cmp $4, %eax
@@ -209,6 +211,7 @@ et_stampacheck:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
+
 et_stampacheck_c:
     movl $4, %eax
     movl $1, %ebx
@@ -220,7 +223,6 @@ et_stampacheck_c:
     leal acapo, %ecx
     movl acapo_len, %edx
     int $0x80
-
 
 et_ricevo_carattere:
     movl $3, %eax
@@ -246,6 +248,7 @@ et_ricevo_carattere:
     je freccia_destra
     cmpb $68, %al
     je freccia_sinistra
+
 guardo_enter:
     cmp $10, %eax 
     je et_end
@@ -277,7 +280,6 @@ et_stampaonba:
     movl on_len, %edx
     int $0x80
     jmp et_stampacheck
-
 
 stmp_f_data:
     movl $4, %eax
