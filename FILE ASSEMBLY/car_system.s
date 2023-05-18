@@ -1,5 +1,8 @@
 .section .data
 
+clear_screen:
+    .ascii "\033[2J"
+
 tastiera:
     .space 3
 
@@ -109,8 +112,15 @@ olio_fatto_len:
     .global _start
 
 _start:
+    # Pulizia dello schermo
+    mov $4, %eax
+    mov $1, %ebx
+    mov $clear_screen, %ecx
+    mov $6, %edx 
+    int $0x80
 
 et_stampamenu:
+
 
 et_stampasett:
     movl $4, %eax
@@ -222,14 +232,13 @@ et_stampacheck_c:
     leal acapo, %ecx
     movl acapo_len, %edx
     int $0x80
-    jmp input_loop
 
 
 et_ricevo_carattere:
     movl $3, %eax
     xorl %ebx, %ebx
     leal tastiera, %ecx
-    movl $3, %edx
+    movl $4, %edx
     int $0x80
     movl $0, %esi
     movb tastiera(%esi), %al
@@ -251,7 +260,7 @@ et_ricevo_carattere:
     cmpb $68, %al
     je freccia_sinistra
 guardo_enter:
-    cmp $10, %eax 
+    cmp $10, %al
     je et_end
     jmp et_ricevo_carattere
 

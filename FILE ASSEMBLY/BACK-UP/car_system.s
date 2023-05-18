@@ -1,5 +1,8 @@
 .section .data
 
+clear_screen:
+    .ascii "\033[2J"
+
 tastiera:
     .space 3
 
@@ -36,7 +39,7 @@ ora_len:
 
 blocco_porte:
     .ascii "3. Blocco Automatico Porte: "
-
+    
 blocco_porte_len:
     .long . - blocco_porte
 
@@ -109,8 +112,15 @@ olio_fatto_len:
     .global _start
 
 _start:
+    # Pulizia dello schermo
+    mov $4, %eax
+    mov $1, %ebx
+    mov $clear_screen, %ecx
+    mov $6, %edx 
+    int $0x80
 
 et_stampamenu:
+
 
 et_stampasett:
     movl $4, %eax
@@ -228,7 +238,7 @@ et_ricevo_carattere:
     movl $3, %eax
     xorl %ebx, %ebx
     leal tastiera, %ecx
-    movl $3, %edx
+    movl $4, %edx
     int $0x80
     movl $0, %esi
     movb tastiera(%esi), %al
@@ -240,6 +250,7 @@ et_ricevo_carattere:
     jne et_ricevo_carattere
     incl %esi
     movb tastiera(%esi), %al
+    movl $0, tastiera
     cmpb $65, %al
     je freccia_su
     cmpb $66, %al
@@ -249,7 +260,7 @@ et_ricevo_carattere:
     cmpb $68, %al
     je freccia_sinistra
 guardo_enter:
-    cmp $10, %eax 
+    cmp $10, %al
     je et_end
     jmp et_ricevo_carattere
 
