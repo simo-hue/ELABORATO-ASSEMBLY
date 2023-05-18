@@ -36,7 +36,7 @@ ora_len:
 
 blocco_porte:
     .ascii "3. Blocco Automatico Porte: "
-
+    
 blocco_porte_len:
     .long . - blocco_porte
 
@@ -222,6 +222,7 @@ et_stampacheck_c:
     leal acapo, %ecx
     movl acapo_len, %edx
     int $0x80
+    jmp et_ricevo_carattere
 
 
 et_ricevo_carattere:
