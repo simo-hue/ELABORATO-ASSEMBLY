@@ -74,7 +74,7 @@ off_len:
     .long . - off
 
 sottomenu_porte:
-    .ascii "SOTTO MENU BLOCCO AUTOMATICO PORTE\n\n\n"
+    .ascii "\n\n\nSOTTO MENU BLOCCO AUTOMATICO PORTE\n\n\n"
 sottomenu_porte_len:
     .long . - sottomenu_porte
 
@@ -283,6 +283,7 @@ freccia_giu:
 
 
 freccia_destra:
+    jmp entrasottomenu
 
 
 freccia_sinistra:
@@ -296,6 +297,41 @@ passasopra:
     movl $0, pos_freccia
     jmp et_stampamenu
 
+entrasottomenu:
+    movl pos_freccia, %eax
+    cmp $2, %eax
+    je entrasotporte
+    cmp $3, %eax
+    je entrasotback
+
+entrasotporte:
+    movl $4, %eax
+    movl $1, %ebx
+    leal sottomenu_porte, %ecx
+    movl sottomenu_porte_len, %edx
+    int $0x80
+    movl $4, %eax
+    movl $1, %ebx
+    leal stato_attuale, %ecx
+    movl stato_attuale_len, %edx
+    int $0x80
+    movl stato_porte, %eax
+    cmp $0, %eax
+    je stmp_on_sotporte
+    movl $4, %eax
+    movl $1, %ebx
+    leal off, %ecx
+    movl $4, %edx
+    int $0x80
+    jmp input_sotporte
+
+entrasotback:
+    movl $4, %eax
+    movl $1, %ebx
+    leal sottomenu_back, %ecx
+    movl sottomenu_back_len, %ecx
+    int $0x80
+    jmp et_stampamenu
 
 et_stampaonbl:
     movl $4, %eax
@@ -304,7 +340,33 @@ et_stampaonbl:
     movl on_len, %edx
     int $0x80
     jmp et_stampaback
-    
+
+input_sotporte:
+    movl $3, %eax
+    xorl %ebx, %ebx
+    leal tastiera, %ecx
+    movl $4, %edx
+    int $0x80
+    movl $0, %esi
+    movb tastiera(%esi), %al
+    cmpb $27, %al
+    jne enter_sotporte
+    incl %esi
+    movb tastiera(%esi), %al
+    cmpb $91, %al
+    jne et_ricevo_carattere
+    incl %esi
+    movb tastiera(%esi), %al
+    movl $0, tastiera
+    cmpb $65, %al
+    je freccia_su
+    cmpb $66, %al
+    je freccia_giu
+    enter_sotporte:
+    cmp $10, %al
+    je et_stampamenu
+    jmp et_ricevo_carattere
+
 et_stampaonba:
     movl $4, %eax
     movl $1, %ebx
