@@ -1,8 +1,14 @@
 .section .data
 
+#dichiaro ogni cosa che devo scrivere
+
+stato_superuser:
+    .long 0
+
 clear_screen:
     .ascii "\033[2J"
 
+#ciò che prendo da tastiera
 tastiera:
     .space 3
 
@@ -13,6 +19,8 @@ acapo_len:
 
 pos_freccia:
     .long 0
+
+#per gestire on e off
 
 stato_porte:
     .long 0
@@ -119,8 +127,11 @@ _start:
     mov $6, %edx 
     int $0x80
 
+#stampo il menù iniziale
+
 et_stampamenu:
 
+#stampa Setting
 
 et_stampasett:
     movl $4, %eax
@@ -129,6 +140,7 @@ et_stampasett:
     movl sett_auto_len, %edx
     int $0x80
 
+#stampa la data
 
 et_stampadata:
     movl pos_freccia, %eax
@@ -139,6 +151,7 @@ et_stampadata:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
+#se c'è la freccia può ripartire da qua   
 et_stampadata_c:
     movl $4, %eax
     movl $1, %ebx
@@ -146,6 +159,7 @@ et_stampadata_c:
     movl data_len, %edx
     int $0x80
 
+#stampa ora
 et_stampaora:
     movl pos_freccia, %eax
     cmp $1, %eax
@@ -162,7 +176,7 @@ et_stampaora_c:
     movl ora_len, %edx
     int $0x80
 
-
+#stampa blocco Porte
 et_stampa_blocco:
     movl pos_freccia, %eax
     cmp $2, %eax
@@ -184,9 +198,10 @@ et_stampablocco_c:
     movl $4, %eax
     movl $1, %ebx
     leal off, %ecx
-    leal off_len, %edx
+    movl off_len, %edx
     int $0x80
 
+#stampa back-Home
 et_stampaback:
     movl pos_freccia, %eax
     cmp $3, %eax
@@ -211,7 +226,7 @@ et_stampaback_c:
     leal off_len, %edx
     int $0x80
 
-
+#stampa check olio
 et_stampacheck:
     movl pos_freccia, %eax
     cmp $4, %eax
@@ -233,7 +248,8 @@ et_stampacheck_c:
     movl acapo_len, %edx
     int $0x80
 
-
+#dopo aver stampato il menu' aspetto input da utente 
+#controllo se sono state premute le freccie, codice 27, 91 e poi da 65 a 68
 et_ricevo_carattere:
     movl $3, %eax
     xorl %ebx, %ebx
@@ -259,11 +275,14 @@ et_ricevo_carattere:
     je freccia_destra
     cmpb $68, %al
     je freccia_sinistra
+#controllo se ha premuto invio
 guardo_enter:
     cmp $10, %al
     je et_end
+    #se non è stata premuta una freccia o l'invio continuo a chidere il carattere
     jmp et_ricevo_carattere
 
+#in base a che freccia ho ricevuto eseguo
 freccia_su:
     movl pos_freccia, %eax
     cmp $0, %eax
@@ -289,13 +308,21 @@ freccia_destra:
 freccia_sinistra:
     jmp et_end
 
+#serve per gestire la posizione dell'indicaore >
 passasotto:
+    movl stato_superuser, %eax
+    cmp 0, %eax
+    jne passotsuper
     movl $4, pos_freccia
     jmp et_stampamenu
+    passotsuper:
+        movl $6, pos_freccia
+        jmp et_stampamenu
 
 passasopra:
     movl $0, pos_freccia
     jmp et_stampamenu
+
 
 entrasottomenu:
     movl pos_freccia, %eax
@@ -303,7 +330,13 @@ entrasottomenu:
     je entrasotporte
     cmp $3, %eax
     je entrasotback
+    cmp $5, %eax
+    je entrafrecciedir
+    cmp $6, %eax
+    je entraresetpres
+    jmp et_ricevo_carattere
 
+#entra sottomenu blocco Porte
 entrasotporte:
     movl $4, %eax
     movl $1, %ebx
@@ -321,10 +354,25 @@ entrasotporte:
     movl $4, %eax
     movl $1, %ebx
     leal off, %ecx
-    movl $4, %edx
+    movl off_len, %edx
     int $0x80
     jmp input_sotporte
 
+stmp_on_sotporte:
+    movl $4, %eax
+    movl $1, %ebx
+    leal on, %ecx
+    movl on_len, %edx
+    int $0x80
+    movl $4, %eax
+    movl $1, %ebx
+    leal acapo, %ecx
+    movl acapo_len, %edx
+    int $0x80
+    jmp input_sotporte
+
+
+#entra sottomentu back-home
 entrasotback:
     movl $4, %eax
     movl $1, %ebx
@@ -332,6 +380,13 @@ entrasotback:
     movl sottomenu_back_len, %ecx
     int $0x80
     jmp et_stampamenu
+
+#entra sottomenu freccie direzione
+entrafrecciedir:
+
+#entra sottomenu reset pressione
+entraresetpres:
+
 
 et_stampaonbl:
     movl $4, %eax
@@ -359,13 +414,24 @@ input_sotporte:
     movb tastiera(%esi), %al
     movl $0, tastiera
     cmpb $65, %al
-    je freccia_su
+    je freccia_su_sotporte
     cmpb $66, %al
-    je freccia_giu
+    je freccia_su_sotporte
     enter_sotporte:
     cmp $10, %al
     je et_stampamenu
     jmp et_ricevo_carattere
+
+freccia_su_sotporte:
+    movl stato_porte, %eax
+    cmp $0, %eax
+    je cambio_in_1
+    movl $0, stato_porte
+    jmp entrasotporte
+
+cambio_in_1:
+    movl $1, stato_porte
+    jmp entrasotporte
 
 et_stampaonba:
     movl $4, %eax
