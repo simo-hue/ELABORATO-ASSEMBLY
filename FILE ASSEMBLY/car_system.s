@@ -97,7 +97,7 @@ usa_freccie_len:
     .long . - usa_freccie
 
 sottomenu_back:
-    .ascii "SOTTO MENU BACK-HOME\n\n\n"
+    .ascii "\n\n\nSOTTO MENU BACK-HOME\n\n\n"
 sottomenu_back_len:
     .long . - sottomenu_back
 
@@ -223,7 +223,7 @@ et_stampaback_c:
     movl $4, %eax
     movl $1, %ebx
     leal off, %ecx
-    leal off_len, %edx
+    movl off_len, %edx
     int $0x80
 
 #stampa check olio
@@ -323,7 +323,7 @@ passasopra:
     movl $0, pos_freccia
     jmp et_stampamenu
 
-
+#entra nel sottomenu se possibile dopo aver schiacciato frecci destra
 entrasottomenu:
     movl pos_freccia, %eax
     cmp $2, %eax
@@ -358,6 +358,7 @@ entrasotporte:
     int $0x80
     jmp input_sotporte
 
+#stampa on nel sottomenu del blocco Porte
 stmp_on_sotporte:
     movl $4, %eax
     movl $1, %ebx
@@ -371,32 +372,13 @@ stmp_on_sotporte:
     int $0x80
     jmp input_sotporte
 
-
-#entra sottomentu back-home
-entrasotback:
-    movl $4, %eax
-    movl $1, %ebx
-    leal sottomenu_back, %ecx
-    movl sottomenu_back_len, %ecx
-    int $0x80
-    jmp et_stampamenu
-
-#entra sottomenu freccie direzione
-entrafrecciedir:
-
-#entra sottomenu reset pressione
-entraresetpres:
-
-
-et_stampaonbl:
-    movl $4, %eax
-    movl $1, %ebx
-    leal on, %ecx
-    movl on_len, %edx
-    int $0x80
-    jmp et_stampaback
-
+#nel sottomenu del blocco porte aspetto un input
 input_sotporte:
+    movl $4, %eax
+    movl $1, %ebx
+    leal usa_freccie, %ecx
+    movl usa_freccie_len, %edx
+    int $0x80
     movl $3, %eax
     xorl %ebx, %ebx
     leal tastiera, %ecx
@@ -420,18 +402,99 @@ input_sotporte:
     enter_sotporte:
     cmp $10, %al
     je et_stampamenu
-    jmp et_ricevo_carattere
+    jmp input_sotporte
 
 freccia_su_sotporte:
     movl stato_porte, %eax
     cmp $0, %eax
-    je cambio_in_1
+    je cambio_in_1_porte
     movl $0, stato_porte
     jmp entrasotporte
 
-cambio_in_1:
+cambio_in_1_porte:
     movl $1, stato_porte
     jmp entrasotporte
+
+#entra sottomentu back-home
+entrasotback:
+    movl $4, %eax
+    movl $1, %ebx
+    leal sottomenu_back, %ecx
+    movl sottomenu_back_len, %edx
+    int $0x80
+    movl $4, %eax
+    movl $1, %ebx
+    leal stato_attuale, %ecx
+    movl stato_attuale_len, %edx
+    int $0x80
+    movl stato_back, %eax
+    cmp $0, %eax
+    je stmp_on_back
+    movl $4, %eax
+    movl $1, %ebx
+    leal off, %ecx
+    movl off_len, %edx
+    int $0x80
+    jmp input_sotback
+    stmp_on_back:
+        movl $4, %eax
+        movl $1, %ebx
+        leal on, %ecx
+        movl on_len, %edx
+        int $0x80
+        jmp input_sotback
+
+#chiedo input in sottomenu back-home
+input_sotback:
+movl $3, %eax
+    xorl %ebx, %ebx
+    leal tastiera, %ecx
+    movl $4, %edx
+    int $0x80
+    movl $0, %esi
+    movb tastiera(%esi), %al
+    cmpb $27, %al
+    jne enter_sotback
+    incl %esi
+    movb tastiera(%esi), %al
+    cmpb $91, %al
+    jne et_ricevo_carattere
+    incl %esi
+    movb tastiera(%esi), %al
+    movl $0, tastiera
+    cmpb $65, %al
+    je freccia_su_sotback
+    cmpb $66, %al
+    je freccia_su_sotback
+    enter_sotback:
+    cmp $10, %al
+    je et_stampamenu
+    jmp input_sotback
+
+freccia_su_sotback:
+    movl stato_back, %eax
+    cmp $0, %eax
+    je cambio_1_back
+    movl $0, stato_back
+    cambio_1_back:
+        movl $1, stato_back
+        jmp input_sotback
+
+
+#entra sottomenu freccie direzione
+entrafrecciedir:
+
+#entra sottomenu reset pressione
+entraresetpres:
+
+#stampa on del blocco porte
+et_stampaonbl:
+    movl $4, %eax
+    movl $1, %ebx
+    leal on, %ecx
+    movl on_len, %edx
+    int $0x80
+    jmp et_stampaback
 
 et_stampaonba:
     movl $4, %eax
