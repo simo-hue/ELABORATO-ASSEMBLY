@@ -478,7 +478,7 @@ freccia_su_sotback:
     movl $0, stato_back
     cambio_1_back:
         movl $1, stato_back
-        jmp input_sotback
+        jmp entrasotback
 
 
 #entra sottomenu freccie direzione
