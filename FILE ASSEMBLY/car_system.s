@@ -311,7 +311,7 @@ freccia_sinistra:
 #serve per gestire la posizione dell'indicaore >
 passasotto:
     movl stato_superuser, %eax
-    cmp 0, %eax
+    cmp $0, %eax
     jne passotsuper
     movl $4, pos_freccia
     jmp et_stampamenu
@@ -356,6 +356,11 @@ entrasotporte:
     leal off, %ecx
     movl off_len, %edx
     int $0x80
+    movl $4, %eax
+    movl $1, %ebx
+    leal usa_freccie, %ecx
+    movl usa_freccie_len, %edx
+    int $0x80
     jmp input_sotporte
 
 #stampa on nel sottomenu del blocco Porte
@@ -370,15 +375,15 @@ stmp_on_sotporte:
     leal acapo, %ecx
     movl acapo_len, %edx
     int $0x80
-    jmp input_sotporte
-
-#nel sottomenu del blocco porte aspetto un input
-input_sotporte:
     movl $4, %eax
     movl $1, %ebx
     leal usa_freccie, %ecx
     movl usa_freccie_len, %edx
     int $0x80
+    jmp input_sotporte
+
+#nel sottomenu del blocco porte aspetto un input
+input_sotporte:
     movl $3, %eax
     xorl %ebx, %ebx
     leal tastiera, %ecx
@@ -446,7 +451,12 @@ entrasotback:
 
 #chiedo input in sottomenu back-home
 input_sotback:
-movl $3, %eax
+    movl $4, %eax
+    movl $1, %ebx
+    leal usa_freccie, %ecx
+    movl usa_freccie_len, %edx
+    int $0x80
+    movl $3, %eax
     xorl %ebx, %ebx
     leal tastiera, %ecx
     movl $4, %edx
@@ -476,6 +486,7 @@ freccia_su_sotback:
     cmp $0, %eax
     je cambio_1_back
     movl $0, stato_back
+    jmp entrasotback
     cambio_1_back:
         movl $1, stato_back
         jmp entrasotback
