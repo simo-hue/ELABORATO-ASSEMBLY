@@ -8,6 +8,8 @@ reset_frecce:
 reset_frecce_len:
     .long . - reset_frecce
 
+valore_per_super:
+    .ascii "2244"
 
 
 sottomenu_frecce:
@@ -46,12 +48,12 @@ sottomentu_pressione_len:
     .long . - sottomentu_pressione
 
 risposta_pressione:
-    .ascii "La pressione delle gomme è stata resettata correttamente\n\n"
+    .ascii "\n\n\n\n\nLa pressione delle gomme è stata resettata correttamente\n\n\n"
 risposta_pressione_len:
     .long . - risposta_pressione
 
 stato_superuser:
-    .long 1
+    .long 0
 
 clear_screen:
     .ascii "\033[2J"
@@ -175,6 +177,16 @@ _start:
     mov $6, %edx 
     int $0x80
 
+#controllo se supervisor
+    movl 4(%esp), %eax
+    addl $4, %eax
+    movl (%eax), %ebx
+    movl  valore_per_super, %ecx
+    cmp %ebx, %ecx
+    jne et_stampamenu
+    movl $1, stato_superuser
+
+    
 #stampo il menù iniziale
 
 et_stampamenu:
@@ -657,18 +669,18 @@ input_sotfrecce:
     jmp input_sotfrecce
 
 mettiatre:
-    leal num_lam_ascii, %esi
-    movb $51, (%esi)
+    movl $0, %esi
+    movb $51, num_lam_ascii(%esi)
     jmp controllosemaggiore
 
 mettidue:
-    leal num_lam_ascii, %esi
-    movb $50, (%esi)
+    movl $0, %esi
+    movb $50, num_lam_ascii(%esi)
     jmp controllosemaggiore
 
 mettiquattro:
-    leal num_lam_ascii, %esi
-    movb $52, (%esi)
+    movl $0, %esi
+    movb $52, num_lam_ascii(%esi)
     jmp controllosemaggiore
 
 metticinque:
@@ -687,6 +699,44 @@ controllosemaggiore:
 
 #entra sottomenu reset pressione
 entraresetpres:
+    movl $4, %eax
+    movl $1, %ebx
+    leal sottomentu_pressione, %ecx
+    movl sottomentu_pressione_len, %edx
+    int $0x80
+    jmp input_sotpres
+
+input_sotpres:
+    movl $3, %eax
+    movl $1, %ebx
+    leal tastiera, %ecx
+    movl $4, %edx
+    int $0x80
+    movl $0, %esi
+    movb tastiera(%esi), %al
+    cmpb $27, %al
+    jne enter_sotpres
+    incl %esi
+    movb tastiera(%esi), %al
+    cmpb $91, %al
+    jne input_sotpres
+    incl %esi
+    movb tastiera(%esi), %al
+    cmpb $67, %al
+    je freccia_destra_sotpres
+    jmp input_sotpres
+    enter_sotpres:
+    cmp $10, %al
+    je et_stampamenu
+    jmp input_sotpres
+
+freccia_destra_sotpres:
+    movl $4, %eax
+    movl $1, %ebx
+    leal risposta_pressione, %ecx
+    movl risposta_pressione_len, %edx
+    int $0x80
+    jmp entraresetpres
 
 #stampa on del blocco porte
 et_stampaonbl:

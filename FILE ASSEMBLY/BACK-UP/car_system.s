@@ -641,9 +641,9 @@ input_sotfrecce:
     cmp $10, %al
     je et_stampamenu
     cmp $48, %al
-    je mettiad
+    je mettidue
     cmp $49, %al
-    je mettiatre
+    je mettidue
     cmp $50, %al
     je mettidue
     cmp $51, %al
@@ -657,24 +657,33 @@ input_sotfrecce:
     jmp input_sotfrecce
 
 mettiatre:
-    leal num_lam_ascii, %esi
-    movb $51, (%esi)
-    jmp entrafrecciedir
+    movl $0, %esi
+    movb $51, num_lam_ascii(%esi)
+    jmp controllosemaggiore
 
 mettidue:
-    leal num_lam_ascii, %esi
-    movb $50, (%esi)
-    jmp entrafrecciedir
+    movl $0, %esi
+    movb $50, num_lam_ascii(%esi)
+    jmp controllosemaggiore
 
 mettiquattro:
-    leal num_lam_ascii, %esi
-    movb $52, (%esi)
-    jmp entrafrecciedir
+    movl $0, %esi
+    movb $52, num_lam_ascii(%esi)
+    jmp controllosemaggiore
 
 metticinque:
     leal num_lam_ascii, %esi
     movb $53, (%esi)
     jmp entrafrecciedir
+
+controllosemaggiore:
+    incl %esi
+    movb tastiera(%esi), %al
+    cmp $48, %al
+    jl entrafrecciedir
+    cmp $57, %al
+    jg entrafrecciedir
+    jmp metticinque
 
 #entra sottomenu reset pressione
 entraresetpres:
