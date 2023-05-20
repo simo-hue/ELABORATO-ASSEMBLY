@@ -2,15 +2,19 @@
 
 #dichiaro ogni cosa che devo scrivere
 
+accesso_super:
+    .ascii "\nHai fatto l'accesso come supervisor\n\n"
+accesso_super_len:
+    .long . - accesso_super
+
 #per sottomenu frecce direzione
 reset_frecce:
     .ascii "\n\n\nIl numero dei lampeggi è stato cambiato in: \n\n\n"
 reset_frecce_len:
     .long . - reset_frecce
 
-valore_per_super:
+valore_super:
     .ascii "2244"
-
 
 sottomenu_frecce:
     .ascii "\n\nSOTTOMENU FRECCE DIREZIONALI\n\nQui pui cambiare il numero di lampeggi delle frece\n\nNumero di lampeggi attuali: "
@@ -178,14 +182,25 @@ _start:
     int $0x80
 
 #controllo se supervisor
-    movl 4(%esp), %eax
-    addl $4, %eax
+   
+    movl (%esp), %eax
+    cmp $1, %eax
+    je et_stampamenu
+    movl %esp, %ebx
+    addl $8, %ebx
+    movl (%ebx), %eax
     movl (%eax), %ebx
-    movl  valore_per_super, %ecx
-    cmp %ebx, %ecx
+    movl valore_super, %eax
+    cmp %eax, %ebx
     jne et_stampamenu
     movl $1, stato_superuser
 
+
+    movl $4, %eax
+    movl $1, %ebx
+    leal accesso_super, %ecx
+    movl accesso_super_len, %edx
+    int $0x80
     
 #stampo il menù iniziale
 
