@@ -8,6 +8,27 @@ reset_frecce:
 reset_frecce_len:
     .long . - reset_frecce
 
+
+
+sottomenu_frecce:
+    .ascii "\n\nSOTTOMENU FRECCE DIREZIONALI\n\nQui pui cambiare il numero di lampeggi delle frece\n\nNumero di lampeggi attuali: "
+sottomenu_frecce_len:
+    .long . - sottomenu_frecce
+
+indicazioni_sotfrecce:
+    .ascii "Inserisci un numer compreso tra 2 e 5\n\n"
+
+indicazioni_sotfrecce_len:
+    .long . - indicazioni_sotfrecce
+
+num_lam_int:
+    .long 3
+
+num_lam_ascii:
+    .ascii "3\n\n"
+num_lam_ascii_len:
+    .long . - num_lam_ascii
+
 scritta_frecce:
     .ascii "6. Frecce direzionali\n"
 scritta_frecce_len:
@@ -17,19 +38,6 @@ scritta_pressione:
     .ascii "7. Reset pressione gomme\n"
 scritta_pressione_len:
     .long . - scritta_pressione
-
-sottomenu_frecce:
-    .ascii "\n\nSOTTOMENU FRECCE DIREZIONALI\n\nQui pui cambiare il numero di lampeggi delle frece\n\nNumero di lampeggi attuali: "
-sottomenu_frecce_len:
-    .long . - sottomenu_frecce
-
-num_lam_int:
-    .long 3
-
-num_lam_ascii:
-    .ascii "3"
-num_lam_ascii_len:
-    .long . - num_lam_ascii
 
 #per sottomenu pressione gomme
 sottomentu_pressione:
@@ -606,6 +614,76 @@ freccia_su_sotback:
 
 #entra sottomenu freccie direzione
 entrafrecciedir:
+    movl $4, %eax
+    movl $1, %ebx
+    leal sottomenu_frecce, %ecx
+    movl sottomenu_frecce_len, %edx
+    int $0x80
+    movl $4, %eax
+    movl $1, %ebx
+    leal num_lam_ascii, %ecx
+    movl num_lam_ascii_len, %edx
+    int $0x80
+    movl $4, %eax
+    movl $1, %ebx
+    leal indicazioni_sotfrecce, %ecx
+    movl indicazioni_sotfrecce_len, %edx
+    int $0x80
+
+input_sotfrecce:
+    movl $3, %eax
+    movl $1, %ebx
+    leal tastiera, %ecx
+    movl $4, %edx
+    int $0x80
+    movl $0, %esi
+    movb tastiera(%esi), %al
+    cmp $10, %al
+    je et_stampamenu
+    cmp $48, %al
+    je mettidue
+    cmp $49, %al
+    je mettidue
+    cmp $50, %al
+    je mettidue
+    cmp $51, %al
+    je mettiatre
+    cmp $52, %al
+    je mettiquattro
+    cmp $53, %al
+    je metticinque
+    cmp $53, %al
+    jg metticinque
+    jmp input_sotfrecce
+
+mettiatre:
+    leal num_lam_ascii, %esi
+    movb $51, (%esi)
+    jmp controllosemaggiore
+
+mettidue:
+    leal num_lam_ascii, %esi
+    movb $50, (%esi)
+    jmp controllosemaggiore
+
+mettiquattro:
+    leal num_lam_ascii, %esi
+    movb $52, (%esi)
+    jmp controllosemaggiore
+
+metticinque:
+    leal num_lam_ascii, %esi
+    movb $53, (%esi)
+    jmp entrafrecciedir
+
+controllosemaggiore:
+    incl %esi
+    movb tastiera(%esi), %al
+    cmp $48, %al
+    jl entrafrecciedir
+    cmp $57, %al
+    jg entrafrecciedir
+    jmp metticinque
 
 #entra sottomenu reset pressione
 entraresetpres:
