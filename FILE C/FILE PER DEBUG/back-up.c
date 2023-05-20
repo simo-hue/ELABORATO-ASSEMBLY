@@ -21,7 +21,7 @@ int end = 0, lampeggio[3] = {3, 2, 5}; // lampeggio[0] VALORE SALVATO, lampeggio
 struct datetime dt;
 
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
-void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
+void stottomenu(int indice, int modalità){
     char c, input[100];
     int scelta, lampeggi, reset, porte, home, esciSottoMenu = 0;
     switch (indice)
@@ -373,7 +373,7 @@ void stampaMenu(int modalità) {
                 fine = 1;
                 break;
             case 'C':// FRECCIA DESTRA ( per sotto-menu )
-                stottomenu(vociMenu, dim, posizione, modalità);
+                stottomenu(posizione, modalità);
                 break;
             default:
                 break;
