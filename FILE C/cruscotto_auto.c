@@ -21,7 +21,7 @@ int end = 0, lampeggio[3] = {3, 2, 5}; // lampeggio[0] VALORE SALVATO, lampeggio
 struct datetime dt;
 
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
-void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
+void stottomenu(int indice, int modalità){
     char c, input[100];
     int scelta, lampeggi, reset, porte, home, esciSottoMenu = 0;
     switch (indice)
@@ -33,7 +33,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         c = getchar(); // ALTRIMENTI NON VISUALIZZA IL SOTTOMENU
 
         while(!esciSottoMenu){
-            printf("\033[2J"); // PULISCO TERMINALE:
+            system("clear");  // PULISCO TERMINALE:
             printf("\n***********************************\n********* Sotto Menu Data *********\n***********************************\n\nFUSO ORARIO UTILIZZATO : GMT+2\n");
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -50,7 +50,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         c = getchar(); // ALTRIMENTI NON VISUALIZZA IL SOTTOMENU
 
         while(!esciSottoMenu){
-            printf("\033[2J"); // PULISCO TERMINALE:
+            system("clear");  // PULISCO TERMINALE:
             printf("\n***********************************\n********** Sotto Menu Ora *********\n***********************************\n\nFUSO ORARIO UTILIZZATO : GMT+2\n");
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -67,7 +67,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         c = getchar(); // ALTRIMENTI NON VISUALIZZA IL SOTTOMENU
 
         while(!esciSottoMenu){
-            printf("\033[2J"); // PULISCO TERMINALE:
+            system("clear");  // PULISCO TERMINALE:
             printf("\n**************************************\n* Sotto Menu Blocco Automatico Porte *\n**************************************\n\n\nSTATO ATTUALE: %s\n1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n", stati[blocco_porte]);
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -95,7 +95,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         c = getchar();
 
         while (!esciSottoMenu){
-            printf("\033[2J"); // PULISCO TERMINALE:
+            system("clear");  // PULISCO TERMINALE:
             printf("\n*************************************\n******** Sotto Menu Back-Home *******\n*************************************\n\nSTATO ATTUALE: %s\n1) USARE FRECCIE SU/GIU' PER MODIFICARE CAMBIARE STATO\n", stati[back_home]);
 
 
@@ -126,8 +126,8 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
             c = getchar();
 
             while(!esciSottoMenu){
-                printf("\033[2J"); // PULISCO TERMINALE:
-                printf("\n*************************************\n* Sotto Menu Check Frecce Direzione *\n*************************************\n\nSTATO ATTUALE: %d\n1) FRECCIA DESTRA PER MODIFICARE QUANTITA' LAMPEGGI\n", lampeggio[0]);
+                system("clear");  // PULISCO TERMINALE:
+                printf("\n**************************************\n**** Sotto Menu Frecce Direzione *****\n**************************************\n\nSTATO ATTUALE: %d\n1) FRECCIA DESTRA PER MODIFICARE QUANTITA' LAMPEGGI\n", lampeggio[0]);
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
             fgets(input, sizeof(input), stdin);
@@ -156,7 +156,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
             while (!esciSottoMenu)
             {
-                printf("\033[2J"); // PULISCO TERMINALE:
+                system("clear");  // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
                 printf("\n***********************************\n******* Sotto Menu Check Olio *****\n***********************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
@@ -191,7 +191,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
         while (!esciSottoMenu)
         {
-                printf("\033[2J"); // PULISCO TERMINALE:
+                system("clear");  // PULISCO TERMINALE:
                 // MENU STATICO CHE NON SERVE IMPLEMENTARE:
                 printf("\n***********************************\n******* Sotto Menu Check Olio *****\n***********************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN CHECK DELL'OLIO\n");
                 
@@ -226,7 +226,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
         while (!esciSottoMenu)
         {
 
-            printf("\033[2J"); // PULISCO TERMINALE:
+            system("clear");  // PULISCO TERMINALE:
             printf("\n************************************\n* Sotto Menu Reset Pressione Gomme *\n************************************\n\n1) UTILIZZARE FRECCIA DESTRA PER ESEGUIRE UN RESET DELLA PRESSIONE\n");
             
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
@@ -295,7 +295,7 @@ void stampaMenu(int modalità) {
 
     while (!fine) {
         // STAMPO VOCI DEL MENU:
-        printf("\033[2J"); // PULISCO TERMINALE:
+        system("clear");  // PULISCO TERMINALE:
         printf("Setting Automobile:\n");
         for (int i = 0; i < dim; i++) {
             // TROVO TEMPO ISTANTANEO: 
@@ -369,11 +369,11 @@ void stampaMenu(int modalità) {
                 }
                 break;
             case 'D':// INVIO
-                printf("\033[2J"); // PULISCO TERMINALE:
+                system("clear");  // PULISCO TERMINALE:
                 fine = 1;
                 break;
             case 'C':// FRECCIA DESTRA ( per sotto-menu )
-                stottomenu(vociMenu, dim, posizione, modalità);
+                stottomenu(posizione, modalità);
                 break;
             default:
                 break;
