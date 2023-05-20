@@ -193,6 +193,13 @@ _start:
     movl valore_super, %eax
     cmp %eax, %ebx
     jne et_stampamenu
+    movl %esp, %ebx
+    addl $8, %ebx
+    movl (%ebx), %ecx
+    movb 4(%ecx), %al
+    cmpb $0, %al
+    jne et_stampamenu
+
     movl $1, stato_superuser
 
 
