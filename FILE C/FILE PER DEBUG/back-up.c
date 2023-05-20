@@ -127,7 +127,7 @@ void stottomenu(char vociMenu[][100], int dim, int indice, int modalità){
 
             while(!esciSottoMenu){
                 printf("\033[2J"); // PULISCO TERMINALE:
-                printf("\n*************************************\n* Sotto Menu Check Frecce Direzione *\n*************************************\n\nSTATO ATTUALE: %d\n1) FRECCIA DESTRA PER MODIFICARE QUANTITA' LAMPEGGI\n", lampeggio[0]);
+                printf("\n**************************************\n**** Sotto Menu Frecce Direzione *****\n**************************************\n\nSTATO ATTUALE: %d\n1) FRECCIA DESTRA PER MODIFICARE QUANTITA' LAMPEGGI\n", lampeggio[0]);
 
             // DIFFERENZIO LE VARIE CASISTICHE DI TASTI PREMUTI:
             fgets(input, sizeof(input), stdin);
