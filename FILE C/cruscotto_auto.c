@@ -23,7 +23,7 @@ struct datetime dt;
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
 void stottomenu(int indice, int modalità){
     char c, input[100];
-    int scelta, lampeggi, reset, porte, home, esciSottoMenu = 0;
+    int lampeggi, esciSottoMenu = 0;
     switch (indice)
     {
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
