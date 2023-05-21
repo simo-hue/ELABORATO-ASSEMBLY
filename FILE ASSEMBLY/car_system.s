@@ -1,20 +1,19 @@
+
 .section .data
 
-#dichiaro ogni cosa che devo scrivere
+# dichiaro ogni cosa che devo stampare
 
+# stampo se ho fatto l'accesso come supervisor
 accesso_super:
     .ascii "\nHai fatto l'accesso come supervisor\n\n"
 accesso_super_len:
     .long . - accesso_super
 
-#per sottomenu frecce direzione
-reset_frecce:
-    .ascii "\n\n\nIl numero dei lampeggi è stato cambiato in: \n\n\n"
-reset_frecce_len:
-    .long . - reset_frecce
-
+# definisco la stringa da comparare con ciò che viene inserito con l'esecuzione del programma
 valore_super:
     .ascii "2244"
+
+# per sottomenu frecce direzione
 
 sottomenu_frecce:
     .ascii "\n\nSOTTOMENU FRECCE DIREZIONALI\n\nQui pui cambiare il numero di lampeggi delle frece\n\nNumero di lampeggi attuali: "
@@ -27,9 +26,6 @@ indicazioni_sotfrecce:
 indicazioni_sotfrecce_len:
     .long . - indicazioni_sotfrecce
 
-num_lam_int:
-    .long 3
-
 num_lam_ascii:
     .ascii "3\n\n"
 num_lam_ascii_len:
@@ -40,12 +36,13 @@ scritta_frecce:
 scritta_frecce_len:
     .long . - scritta_frecce
 
+# stampa menu pressione
 scritta_pressione:
     .ascii "7. Reset pressione gomme\n"
 scritta_pressione_len:
     .long . - scritta_pressione
 
-#per sottomenu pressione gomme
+# per sottomenu pressione gomme
 sottomentu_pressione:
     .ascii "\n\nSOTTOMENU PRESSIONE GOMME\n\nQui puoi resettare la pressione delle gomme premendo la freccia destra\n\n"
 sottomentu_pressione_len:
@@ -56,13 +53,15 @@ risposta_pressione:
 risposta_pressione_len:
     .long . - risposta_pressione
 
+# metodo utilizzato per tener conto dell'accesso o meno come suprvisor. Default 0 per assenza supervisor
 stato_superuser:
     .long 0
 
+# stringa usata per puire lo schermo all'inizio
 clear_screen:
     .ascii "\033[2J"
 
-#ciò che prendo da tastiera
+# ciò che prendo da tastiera
 tastiera:
     .space 3
 
@@ -71,50 +70,55 @@ acapo:
 acapo_len:
     .long . - acapo
 
+# posizione della freccia nel menu
 pos_freccia:
     .long 0
 
-#per gestire on e off
-
+# per gestire on e off di blocco porte e back-home
 stato_porte:
     .long 0
 
 stato_back:
     .long 0
 
+# stampa titolo menu
 sett_auto:
     .ascii "Setting automobile:\n\n"
 
 sett_auto_len:
-    
     .long . - sett_auto
 
+# stampa data menu
 data:
     .ascii "1. Data: 18/05/2023\n"
 data_len:
     .long . - data
 
+# stampa ora menu
 ora:
     .ascii "2. Ora: 15:15\n"
 ora_len:
     .long . - ora
 
+# stampa blocco porte menu
 blocco_porte:
     .ascii "3. Blocco Automatico Porte: "
-    
 blocco_porte_len:
     .long . - blocco_porte
 
+# stampa back-home menu
 back_home:
     .ascii "4. Back-Home: "
 back_home_len:
     .long . - back_home
 
+#stampa check olio menu
 check_olio:
     .ascii "5. Check Olio\n"
 check_olio_len:
     .long . - check_olio
 
+# freccia utilizzata per indicare la posizione all'interno del menu
 freccia:
     .ascii "> "
 freccia_len:
@@ -170,6 +174,7 @@ olio_fatto:
 olio_fatto_len:
     .long . - olio_fatto
 
+# inizio del programma
 .section .text
     .global _start
 
@@ -181,7 +186,7 @@ _start:
     mov $6, %edx 
     int $0x80
 
-#controllo se supervisor
+# controllo se supervisor
    
     movl (%esp), %eax
     cmp $1, %eax
@@ -199,21 +204,18 @@ _start:
     movb 4(%ecx), %al
     cmpb $0, %al
     jne et_stampamenu
-
     movl $1, stato_superuser
-
-
     movl $4, %eax
     movl $1, %ebx
     leal accesso_super, %ecx
     movl accesso_super_len, %edx
     int $0x80
     
-#stampo il menù iniziale
+# stampo il menù iniziale
 
 et_stampamenu:
 
-#stampa Setting
+# stampa Setting
 
 et_stampasett:
     movl $4, %eax
@@ -222,7 +224,7 @@ et_stampasett:
     movl sett_auto_len, %edx
     int $0x80
 
-#stampa la data
+# stampa la data
 
 et_stampadata:
     movl pos_freccia, %eax
@@ -233,7 +235,7 @@ et_stampadata:
     leal spazio, %ecx
     movl spazio_len, %edx
     int $0x80
-#se c'è la freccia può ripartire da qua   
+# se c'è la freccia può ripartire da qua   
 et_stampadata_c:
     movl $4, %eax
     movl $1, %ebx
@@ -241,7 +243,7 @@ et_stampadata_c:
     movl data_len, %edx
     int $0x80
 
-#stampa ora
+# stampa ora
 et_stampaora:
     movl pos_freccia, %eax
     cmp $1, %eax
@@ -258,7 +260,7 @@ et_stampaora_c:
     movl ora_len, %edx
     int $0x80
 
-#stampa blocco Porte
+# stampa blocco Porte
 et_stampa_blocco:
     movl pos_freccia, %eax
     cmp $2, %eax
@@ -283,7 +285,7 @@ et_stampablocco_c:
     movl off_len, %edx
     int $0x80
 
-#stampa back-Home
+# stampa back-Home
 et_stampaback:
     movl pos_freccia, %eax
     cmp $3, %eax
@@ -308,7 +310,7 @@ et_stampaback_c:
     movl off_len, %edx
     int $0x80
 
-#stampa check olio
+# stampa check olio
 et_stampacheck:
     movl pos_freccia, %eax
     cmp $4, %eax
@@ -325,12 +327,13 @@ et_stampacheck_c:
     movl check_olio_len, %edx
     int $0x80
     
-
+# controllo se supervisor
 et_controllo_supervisor:
     movl stato_superuser, %eax
     cmp $0, %eax
     je et_ricevo_carattere
 
+# stampo menu frecce se supervisor
 et_stampa_frecce:
     movl pos_freccia, %eax
     cmp $5, %eax
@@ -348,6 +351,7 @@ et_stampa_frecce:
     int $0x80
     jmp et_stampa_pressione
 
+# stampa freccia sul menu freccia
 stmp_f_freccia:
     movl $4, %eax
     movl $1, %ebx
@@ -356,6 +360,7 @@ stmp_f_freccia:
     int $0x80
     jmp et_stampa_frecce_c
 
+# stampo menu pressione
 et_stampa_pressione:
     movl pos_freccia, %eax
     cmp $6, %eax
@@ -373,6 +378,7 @@ et_stampa_pressione:
         int $0x80
         jmp et_ricevo_carattere
 
+# stampo freccia se sul menu posizione
 stmp_f_pres:
     movl $4, %eax
     movl $1, %ebx
@@ -381,8 +387,8 @@ stmp_f_pres:
     int $0x80
     jmp et_stampa_pressione_c
 
-#dopo aver stampato il menu' aspetto input da utente 
-#controllo se sono state premute le freccie, codice 27, 91 e poi da 65 a 68
+# dopo aver stampato il menu' aspetto input da utente 
+# controllo se sono state premute le freccie, codice 27, 91 e poi da 65 a 68
 et_ricevo_carattere:
     movl $4, %eax
     movl $1, %ebx
