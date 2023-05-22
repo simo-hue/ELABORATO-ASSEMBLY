@@ -288,7 +288,14 @@ void stampaMenu(int modalità) {
     while (!fine) {
         // STAMPO VOCI DEL MENU:
         system("clear");  // PULISCO TERMINALE:
-        printf("Setting Automobile:\n");
+        
+        // DIFFERENZIO L'UTENTE:
+        if(modalità == 2244){
+            printf("Setting Automobile ( supervisor ):\n");
+        }else{
+            printf("Setting Automobile:\n");
+        }
+
         for (int i = 0; i < dim; i++) {
             // TROVO TEMPO ISTANTANEO: 
                 time_t current_time;
