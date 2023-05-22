@@ -23,7 +23,7 @@ struct datetime dt;
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
 void stottomenu(int indice, int modalità){
     char c, input[100];
-    int lampeggi, esciSottoMenu = 0;
+    int esciSottoMenu = 0;
     switch (indice)
     {
     // MENU STATICO CHE NON SERVE IMPLEMENTARE:
@@ -285,18 +285,10 @@ void stampaMenu(int modalità) {
             strcpy(vociMenu[4], "5) Check Olio;");
     }
 
-    // STAMPO VOCI DEL MENU:
-    printf("Setting Automobile:\n");
-    for (int i = 0; i < num_voci_menu_standard; i++) {
-        printf("- %s\n", vociMenu[i]);          
-    }
-    printf("\n");
-    printf("Premi freccia sinistra o destra per scorrere il menu\n");
-
     while (!fine) {
         // STAMPO VOCI DEL MENU:
         system("clear");  // PULISCO TERMINALE:
-        printf("Setting Automobile:\n");
+        printf("Setting Automobile 1:\n");
         for (int i = 0; i < dim; i++) {
             // TROVO TEMPO ISTANTANEO: 
                 time_t current_time;
@@ -368,7 +360,7 @@ void stampaMenu(int modalità) {
                     posizione = dim - 1;
                 }
                 break;
-            case 'D':// INVIO
+            case 'D':// USCITA DAL MENU PRINCIPALE
                 system("clear");  // PULISCO TERMINALE:
                 fine = 1;
                 break;
