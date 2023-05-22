@@ -17,7 +17,7 @@ struct datetime {
 // COME SCELTA PROGETTUALE SI SCEGLIE DI IMPOSTARE AD ON SIA BLOCCO PORTE CHE BACK-HOME:
 char stati[2][10] = {"OFF", "ON"};
 int blocco_porte = 1, back_home = 1;
-int end = 0, lampeggio[3] = {3, 2, 5}; // lampeggio[0] VALORE SALVATO, lampeggio[1] VALORE MINIMO, lampeggio[2] VALORE MASSIMO:
+int lampeggio[3] = {3, 2, 5}; // lampeggio[0] VALORE SALVATO, lampeggio[1] VALORE MINIMO, lampeggio[2] VALORE MASSIMO:
 struct datetime dt;
 
 // STAMPA TUTTI I SOTTO MENU IN BASE ALL'UTENTE E MODIFICA EVENTUALI PARAMETRI:
