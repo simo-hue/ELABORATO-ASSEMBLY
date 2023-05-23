@@ -5,7 +5,7 @@
 
 # stampo se ho fatto l'accesso come supervisor
 accesso_super:
-    .ascii "\nHai fatto l'accesso come supervisor\n\n"
+    .ascii " ( supervisor ) "
 accesso_super_len:
     .long . - accesso_super
 
@@ -205,11 +205,6 @@ _start:
     cmpb $0, %al
     jne et_stampamenu
     movl $1, stato_superuser
-    movl $4, %eax
-    movl $1, %ebx
-    leal accesso_super, %ecx
-    movl accesso_super_len, %edx
-    int $0x80
     
 # stampo il menù iniziale
 
@@ -223,10 +218,29 @@ et_stampasett:
     leal sett_auto, %ecx
     movl sett_auto_len, %edx
     int $0x80
+    movl stato_superuser, %eax
+    cmp $0, %eax
+    je et_stampadata
+    movl $4, %eax
+    movl $1, %ebx
+    leal accesso_super, %ecx
+    movl accesso_super_len, %edx
+    int $0x80
 
 # stampa la data
 
 et_stampadata:
+    movl $4, %eax
+    movl $1, %ebx
+    leal acapo, %ecx
+    leal acapo_len, %edx
+    int $0x80   
+    movl $4, %eax
+    movl $1, %ebx
+    leal acapo, %ecx
+    leal acapo_len, %edx
+    int $0x80
+
     movl pos_freccia, %eax
     cmp $0, %eax
     je stmp_f_data
