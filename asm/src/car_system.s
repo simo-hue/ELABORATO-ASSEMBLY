@@ -5,7 +5,7 @@
 
 # stampo se ho fatto l'accesso come supervisor
 accesso_super:
-    .ascii " ( supervisor ) "
+    .ascii " ( supervisor ) \n\n"
 accesso_super_len:
     .long . - accesso_super
 
@@ -83,7 +83,7 @@ stato_back:
 
 # stampa titolo menu
 sett_auto:
-    .ascii "Setting automobile:\n\n"
+    .ascii "Setting automobile\n\n"
 
 sett_auto_len:
     .long . - sett_auto
@@ -213,14 +213,23 @@ et_stampamenu:
 # stampa Setting
 
 et_stampasett:
+    movl stato_superuser, %eax
+    cmp $0, %eax
+    jne stampo_settsuper
     movl $4, %eax
     movl $1, %ebx
     leal sett_auto, %ecx
     movl sett_auto_len, %edx
     int $0x80
-    movl stato_superuser, %eax
-    cmp $0, %eax
-    je et_stampadata
+    jmp et_stampadata
+    stampo_settsuper:
+    movl sett_auto_len, %eax
+    subl $2, %eax
+    movl %eax, %edx
+    movl $4, %eax
+    movl $1, %ebx
+    leal sett_auto, %ecx
+    int $0x80
     movl $4, %eax
     movl $1, %ebx
     leal accesso_super, %ecx
@@ -230,17 +239,6 @@ et_stampasett:
 # stampa la data
 
 et_stampadata:
-    movl $4, %eax
-    movl $1, %ebx
-    leal acapo, %ecx
-    leal acapo_len, %edx
-    int $0x80   
-    movl $4, %eax
-    movl $1, %ebx
-    leal acapo, %ecx
-    leal acapo_len, %edx
-    int $0x80
-
     movl pos_freccia, %eax
     cmp $0, %eax
     je stmp_f_data
