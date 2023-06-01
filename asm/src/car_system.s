@@ -16,7 +16,7 @@ valore_super:
 # per sottomenu frecce direzione
 
 sottomenu_frecce:
-    .ascii "\n\nSOTTOMENU FRECCE DIREZIONALI\n\nQui pui cambiare il numero di lampeggi delle frece\n\nNumero di lampeggi attuali: "
+    .ascii "\n\nSOTTOMENU FRECCE DIREZIONALI\n\nQui pui cambiare il numero di lampeggi delle frecce\n\nNumero di lampeggi attuali: "
 sottomenu_frecce_len:
     .long . - sottomenu_frecce
 
